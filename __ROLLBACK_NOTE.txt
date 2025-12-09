@@ -1,0 +1,5 @@
+CountUp integration (component, App.tsx import, and after-founder-counts styles) has been rolled back on 2025-11-18.
+- Removed CountUp import and JSX from src/App.tsx
+- Restored AfterFounder mask z-index and removed CountUp-specific CSS from src/App.css
+- CountUp.tsx file still exists but is unused; delete if not needed.
+
