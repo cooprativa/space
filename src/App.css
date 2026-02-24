@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* Bloquear scroll nativo e empilhar secções no viewport */
 html, body, #root {
   height: 100%;
@@ -63,6 +65,13 @@ body { touch-action: none; }
   position: relative;
   background-color: #0B2E42; /* fallback */
   overflow-x: hidden;
+}
+
+.hero-biker {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1001;
 }
 
 .logo-container {
@@ -393,6 +402,187 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   color: #ffffff;
   z-index: 10;
   padding-left: 56px; /* align label start with the number’s left edge, not under the SVG */
+}
+
+/* .glass-navbar-container {
+  position: fixed;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 40px;
+  z-index: 1000;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+} */
+
+.liquid-glass-container-ref {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+}
+
+/* Dark tint + padding + backdrop blur applied directly on .glass.
+   Putting backdrop-filter here (instead of on the nested glass__warp span)
+   avoids stacking-context issues caused by the container's transform. */
+.glass {
+  padding: 16px 32px !important;
+  background: rgba(26, 26, 26, 0.50) !important;
+  backdrop-filter: blur(20px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(130%) !important;
+}
+
+/* Disable the internal glass__warp effects — blur is now on .glass itself */
+.glass .glass__warp {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  background: rgba(0,0,0,0.35);
+  overflow: hidden;
+}
+
+/* Remove the 0.2s transition from LiquidGlass overlay divs so they follow
+   the glass size instantly (updated every frame via resize events).
+   Only keep transform transition for the elastic mouse-follow effect. */
+.liquid-glass-container-ref > div {
+  transition: transform 0.4s ease-out !important;
+}
+
+/* .floating-navbar {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+} */
+
+/* .floating-navbar {
+  min-width: max-content;
+  display: flex;
+  gap: 36px;
+  align-items: center;
+} */
+
+/* Collapsed (default) → narrow; Expanded (on hover) → wide */
+.floating-navbar {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  max-width: 220px;
+  transition: max-width 0.4s ease-out !important;
+  padding-right: 60px;
+}
+
+.floating-navbar.expanded {
+  max-width: 800px;
+  padding-right: 0px;
+}
+
+.navbar-dark-bg {
+  position: absolute;
+  width: 718px;
+  height: 58px;
+  top: 1px;
+  left: 1px;
+  border-radius: 40px;
+}
+/* .floating-navbar > img {
+  width: 120px;
+  z-index: 1001;
+  cursor: pointer;
+} */
+.nav-logo-container {
+  position: relative;
+  min-width: fit-content;
+  display: flex;
+  margin: 0;
+  cursor: pointer;
+}
+.nav-logo-container > img {
+  width: 120px;
+  z-index: 1;
+  opacity: .9;
+}
+.nav-logo-container > img:nth-of-type(1) {
+  position: absolute;
+}
+.nav-logo-container > img:nth-of-type(2) {
+  transition: all .1s ease-in-out;
+}
+.nav-logo-container:hover > img {
+  opacity: 1;
+}
+.nav-logo-container:hover img:nth-of-type(2) {
+  filter: blur(3px);
+}
+.menu-link {
+  display: flex;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  min-width: 32px;
+}
+
+/* Hide menu icon when navbar is expanded */
+.floating-navbar.expanded .menu-link {
+  display: none;
+  min-width: 32px;
+}
+.floating-navbar.expanded .navlinks {
+  min-width: 600px;
+  max-width: 600px;
+}
+.menu-link:hover .menu-icon:nth-of-type(2) {
+  filter: blur(5px);
+}
+.menu-link > .menu-icon {
+  width: 32px;
+  height: 32px;
+}
+.menu-link > .menu-icon:nth-of-type(1) {
+  position: absolute;
+}
+.menu-link > .menu-icon:nth-of-type(2) {
+  transition: all .1s ease-in-out;
+}
+
+.navlinks {
+  display: flex;
+  gap: 16px;
+  opacity: 0;
+  max-width: 0;
+  pointer-events: none;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
+  white-space: nowrap;
+}
+
+.navlinks.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+.navlinks > p {
+  font-family: 'Coolvetica', sans-serif;
+  font-weight: 400;
+  color: white;
+  font-size: 16px;
+  z-index: 1001;
+  cursor: pointer;
+  padding: 4px;
+  transition: all .1s ease-in-out;
+  opacity: .9;
+}
+.nav-logo {
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
+.nav-logo:hover {
+  text-shadow: white 1px 0 8px;
+}
+.navlinks > p:hover {
+  opacity: 1;
+  text-shadow: white 1px 0 8px;
 }
 
 @media (max-width: 768px) {

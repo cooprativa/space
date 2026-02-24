@@ -1,13 +1,18 @@
 import './App.css'
 import HeroBackground from './assets/images/HeroBackground.jpg'
-import { useEffect, useRef } from 'react'
+/* import HeroBiker from './assets/images/Manel.png' */
+import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { Observer } from 'gsap/Observer'
 import foundedImg from "./assets/images/Founded.jpg";
 import MaskGradient from "./assets/svg/MaskGradient.tsx";
 import afterFounderImg from "./assets/images/AfterFounder.jpg";
 import MaskGradient2 from "./assets/svg/MaskGradient2.tsx";
+/* import NavLogo from "./assets/svg/NavLogo.tsx"; */
 import CountUp from './CountUp'
+/* import GlassSurface from './components/GlassSurface' */
+import LiquidGlass from 'liquid-glass-react'
+import { Bars3Icon } from '@heroicons/react/24/solid'
 
 // Registrar plugins
 gsap.registerPlugin(Observer)
@@ -226,9 +231,122 @@ function App() {
     }
   }, [])
 
+  const liquidGlassContainerRef = useRef<HTMLDivElement>(null);
+
+  const [navbarExpanded, setNavbarExpanded] = useState(false);
+
+  // Attach native hover listeners to the .glass element rendered by LiquidGlass,
+  // because LiquidGlass doesn't support onMouseEnter / onMouseLeave props.
+  useEffect(() => {
+    const container = liquidGlassContainerRef.current;
+    if (!container) return;
+
+    const glassEl = container.querySelector('.glass') as HTMLElement | null;
+    if (!glassEl) return;
+
+    const handleEnter = () => setNavbarExpanded(true);
+    const handleLeave = () => setNavbarExpanded(false);
+
+    glassEl.addEventListener('mouseenter', handleEnter);
+    glassEl.addEventListener('mouseleave', handleLeave);
+
+    return () => {
+      glassEl.removeEventListener('mouseenter', handleEnter);
+      glassEl.removeEventListener('mouseleave', handleLeave);
+    };
+  }, []);
+
+  // LiquidGlass only recalculates its glass surface size on window "resize".
+  // Dispatch resize events every frame during the expand/collapse CSS transition
+  // so the glass surface smoothly follows the content width change.
+  useEffect(() => {
+    let rafId: number;
+    const start = performance.now();
+    const duration = 500; // slightly longer than the 400ms CSS transition
+
+    const tick = () => {
+      window.dispatchEvent(new Event('resize'));
+      if (performance.now() - start < duration) {
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, [navbarExpanded]);
+
 
   return (
     <>
+      
+      {/* <div className="glass-navbar-container">
+        
+        <GlassSurface 
+          width={720} 
+          height={60}
+          borderRadius={40}
+          displace={0.5}
+          distortionScale={-180}
+          redOffset={0}
+          greenOffset={10}
+          blueOffset={20}
+          brightness={30}
+          opacity={0.93}
+          mixBlendMode="screen"
+          className="glass-surface-navbar"
+        >
+          <div className='floating-navbar'>
+            <div className='navbar-dark-bg'></div>
+            <img src="logo-branco.png" alt="" />
+            <div className="navlinks">
+              <p>Who We Are</p>
+              <p>Who We Train</p>
+              <p>Meet The Team</p>
+              <p>Shop</p>
+              <p>Contact</p>
+            </div>
+          </div>
+
+        </GlassSurface>
+      </div> */}
+
+    
+      <div ref={liquidGlassContainerRef} className="liquid-glass-container-ref">
+        <LiquidGlass
+          mouseContainer={liquidGlassContainerRef}
+          elasticity={0.2}
+          style={{ 
+            position: 'fixed',
+          }}
+          displacementScale={64}
+          blurAmount={0.5}
+          saturation={130}
+          aberrationIntensity={2}
+          cornerRadius={40}
+        >
+          <div className={`floating-navbar ${ navbarExpanded ? "expanded" : "" }`}>
+            <div className="nav-logo-container">
+              <img src="/logo-branco.svg" alt="" />
+              <img src="/logo-branco.svg" alt="" />
+            </div>
+
+            <div className="menu-link">
+              <Bars3Icon className='menu-icon' />
+              <Bars3Icon className='menu-icon' />
+            </div>
+            
+            <div className={`navlinks ${ navbarExpanded ? "show" : "" }`}>
+              <p>Who We Are</p>
+              <p>Who We Train</p>
+              <p>Meet The Team</p>
+              <p>Shop</p>
+              <p>Contact</p>
+            </div>
+          </div>
+        </LiquidGlass>
+      </div>
+     
+
       <div className="right-ornament" aria-hidden="true" ref={ornamentRef}>
         {/* Two separate SVGs for the right ornament */}
         <svg
@@ -260,6 +378,9 @@ function App() {
       </div>
 
       <div className="section hero" style={{ backgroundImage: `url(${HeroBackground})` }} ref={heroRef}>
+
+        <img src="./src/assets/images/Manel.png" className="hero-biker" />
+
         <div className="logo-container">
           <div className="logo-main">
             {/* Main Logo SVG */}
