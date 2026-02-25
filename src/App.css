@@ -144,9 +144,12 @@ button.hero-sub {
   cursor: pointer;
   text-align: inherit;
 }
+button.hero-sub svg path:first-child {
+  transition: all .3s ease-in-out;
+}
 button.hero-sub:focus { outline: none; }
 button.hero-sub:focus-visible { outline: 2px solid #ACFC17; outline-offset: 4px; border-radius: 6px; }
-button.hero-sub:hover svg path:first-child { filter: brightness(1.05); }
+button.hero-sub:hover svg path:first-child { filter: brightness(1.05); fill: #bd97ec; }
 button.hero-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Right-aligned decorative SVG positioning */
@@ -415,13 +418,15 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   backdrop-filter: blur(20px);
 } */
 
-.liquid-glass-container-ref {
+.liquid-glass-navbar-container {
   position: fixed;
-  bottom: 84px;
+  bottom: 64px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
   display: flex;
+  background: rgba(26, 26, 26, 0.50) !important;
+  backdrop-filter: blur(50px) !important;
 }
 
 /* Dark tint + padding + backdrop blur applied directly on .glass.
@@ -446,7 +451,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 /* Remove the 0.2s transition from LiquidGlass overlay divs so they follow
    the glass size instantly (updated every frame via resize events).
    Only keep transform transition for the elastic mouse-follow effect. */
-.liquid-glass-container-ref > div {
+.liquid-glass-navbar-container > div {
   transition: transform 0.4s ease-out !important;
 }
 
@@ -470,7 +475,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   gap: 36px;
   max-width: 220px;
   transition: max-width 0.4s ease-out !important;
-  padding-right: 60px;
+  padding-right: 70px;
 }
 
 .floating-navbar.expanded {
@@ -536,6 +541,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   filter: blur(5px);
 }
 .menu-link > .menu-icon {
+  color: white;
   width: 32px;
   height: 32px;
 }
@@ -562,7 +568,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   pointer-events: auto;
   transform: translateX(0);
 }
-.navlinks > p {
+.navlinks > a {
   font-family: 'Coolvetica', sans-serif;
   font-weight: 400;
   color: white;
@@ -580,7 +586,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 .nav-logo:hover {
   text-shadow: white 1px 0 8px;
 }
-.navlinks > p:hover {
+.navlinks > a:hover {
   opacity: 1;
   text-shadow: white 1px 0 8px;
 }

@@ -25,6 +25,13 @@ function App() {
   const founderBadgeRef = useRef<SVGSVGElement | null>(null)
   const racePlayedRef = useRef(false) // ensure race animation runs only once
 
+  /* Navlinks refs */
+  const heroLinkRef = useRef<HTMLDivElement | null>(null)
+  const founderLinkRef = useRef<HTMLAnchorElement | null>(null)
+  /*   const whoWeTrainLinkRef = useRef<HTMLAnchorElement | null>(null)
+  const meetTheTeamLinkRef = useRef<HTMLAnchorElement | null>(null)
+  const contactLinkRef = useRef<HTMLAnchorElement | null>(null) */
+
   // New: separate SVG refs so we control timings precisely
   const firstSvgRef = useRef<SVGSVGElement | null>(null)
   const secondSvgRef = useRef<SVGSVGElement | null>(null)
@@ -41,7 +48,11 @@ function App() {
     const founderBadgeEl = founderBadgeRef.current
     const firstSvgEl = firstSvgRef.current
     const secondSvgEl = secondSvgRef.current
-    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl) return
+    /* Navlinks */
+    const heroLink = heroLinkRef.current
+    const founderLink = founderLinkRef.current
+    
+    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !heroLink || !founderLink) return
 
     // Estados iniciais (apenas hero visível)
     gsap.set(heroEl, { autoAlpha: 1 })
@@ -224,6 +235,10 @@ function App() {
     }
     window.addEventListener('keydown', onKey, { passive: false })
 
+    /* Managing navlinks clicks */
+    heroLink.addEventListener('click', () => goTo(0), { passive: false })
+    founderLink.addEventListener('click', () => goTo(1), { passive: false })
+
     // Cleanup
     return () => {
       observer?.kill()
@@ -275,44 +290,10 @@ function App() {
     return () => cancelAnimationFrame(rafId);
   }, [navbarExpanded]);
 
-
   return (
     <>
-      
-      {/* <div className="glass-navbar-container">
-        
-        <GlassSurface 
-          width={720} 
-          height={60}
-          borderRadius={40}
-          displace={0.5}
-          distortionScale={-180}
-          redOffset={0}
-          greenOffset={10}
-          blueOffset={20}
-          brightness={30}
-          opacity={0.93}
-          mixBlendMode="screen"
-          className="glass-surface-navbar"
-        >
-          <div className='floating-navbar'>
-            <div className='navbar-dark-bg'></div>
-            <img src="logo-branco.png" alt="" />
-            <div className="navlinks">
-              <p>Who We Are</p>
-              <p>Who We Train</p>
-              <p>Meet The Team</p>
-              <p>Shop</p>
-              <p>Contact</p>
-            </div>
-          </div>
-
-        </GlassSurface>
-      </div> */}
-
-    
-      <div ref={liquidGlassContainerRef} className="liquid-glass-container-ref">
-        <LiquidGlass
+      <div ref={liquidGlassContainerRef} className="liquid-glass-navbar-container">
+        <LiquidGlass mode='polar'
           mouseContainer={liquidGlassContainerRef}
           elasticity={0.2}
           style={{ 
@@ -325,7 +306,7 @@ function App() {
           cornerRadius={40}
         >
           <div className={`floating-navbar ${ navbarExpanded ? "expanded" : "" }`}>
-            <div className="nav-logo-container">
+            <div ref={heroLinkRef} className="nav-logo-container">
               <img src="/logo-branco.svg" alt="" />
               <img src="/logo-branco.svg" alt="" />
             </div>
@@ -336,11 +317,11 @@ function App() {
             </div>
             
             <div className={`navlinks ${ navbarExpanded ? "show" : "" }`}>
-              <p>Who We Are</p>
-              <p>Who We Train</p>
-              <p>Meet The Team</p>
-              <p>Shop</p>
-              <p>Contact</p>
+              <a ref={founderLinkRef} /* ref={whoWeAreLinkRef} */>Who We Are</a>
+              <a /* ref={whoWeTrainLinkRef} */>Who We Train</a>
+              <a /* ref={meetTheTeamLinkRef} */>Meet The Team</a>
+              <a>Shop</a>
+              <a /* ref={contactLinkRef} */>Contact</a>
             </div>
           </div>
         </LiquidGlass>
@@ -379,7 +360,7 @@ function App() {
 
       <div className="section hero" style={{ backgroundImage: `url(${HeroBackground})` }} ref={heroRef}>
 
-        <img src="./src/assets/images/Manel.png" className="hero-biker" />
+        {/* <img src="./src/assets/images/Manel.png" className="hero-biker" /> */}
 
         <div className="logo-container">
           <div className="logo-main">
