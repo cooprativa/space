@@ -15,17 +15,17 @@ interface CountUpProps {
 }
 
 export default function CountUp({
-                                    to,
-                                    from = 0,
-                                    direction = 'up',
-                                    delay = 0,
-                                    duration = 2,
-                                    className = '',
-                                    startWhen = true,
-                                    separator = '',
-                                    onStart,
-                                    onEnd,
-                                }: CountUpProps) {
+    to,
+    from = 0,
+    direction = 'up',
+    delay = 0,
+    duration = 2,
+    className = '',
+    startWhen = false,
+    separator = '',
+    onStart,
+    onEnd,
+}: CountUpProps) {
     const ref = useRef<HTMLSpanElement>(null)
     const motionValue = useMotionValue(direction === 'down' ? to : from)
 

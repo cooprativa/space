@@ -31,11 +31,13 @@ body { touch-action: none; }
   display: block;
   pointer-events: none;
   will-change: transform;
-  z-index: 100; /* always above sections */
+  z-index: 10; /* always above sections */
   overflow: visible;
 }
+.ornament-first-wrapper  { z-index: 200; }
+.ornament-second-wrapper { z-index: 50; }
 
-.right-ornament svg path { will-change: transform, opacity; }
+.ornament-wrapper svg path { will-change: transform, opacity; }
 
 /* Overlay multiple ornament SVGs in the same spot */
 .right-ornament .ornament-svg {
@@ -48,6 +50,7 @@ body { touch-action: none; }
   width: auto;
   max-width: 50vw;
 }
+
 .right-ornament .svg-first { z-index: 2; }
 .right-ornament .svg-second { z-index: 1; }
 
@@ -55,7 +58,7 @@ body { touch-action: none; }
   width: 100vw;
   height: 100vh;
   background-size: cover;
-    --hero-bg-pos-x: 0%; /* anchor slightly left per current design */
+  --hero-bg-pos-x: 0%; /* anchor slightly left per current design */
   /* Dynamic upward shift: min 60px, prefers 24vh, max 230px */
   --hero-bg-shift: clamp(0px, 24vh, 0px);
   background-position: var(--hero-bg-pos-x) calc(50% - var(--hero-bg-shift));
@@ -67,11 +70,26 @@ body { touch-action: none; }
   overflow-x: hidden;
 }
 
-.hero-biker {
+.hero-biker-div {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  --hero-bg-pos-x: 0%; /* anchor slightly left per current design */
+  /* Dynamic upward shift: min 60px, prefers 24vh, max 230px */
+  --hero-bg-shift: clamp(0px, 24vh, 0px);
+  background-position: var(--hero-bg-pos-x) calc(50% - var(--hero-bg-shift));
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
   position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 1001;
+  overflow-x: hidden;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity .4s ease-in-out;
+}
+.hero-biker-div.above {
+  opacity: 1;
+  z-index: 11;
 }
 
 .logo-container {
@@ -154,7 +172,7 @@ button.hero-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Right-aligned decorative SVG positioning */
 .right-ornament {
-  position: fixed; /* ensure it isn't clipped by section overflow during transitions */
+  position: absolute; /* ensure it isn't clipped by section overflow during transitions */
   top: 50%;
   right: 0;
   transform: translateY(-50%);
@@ -165,7 +183,7 @@ button.hero-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Fixed-left state after the scroll animation finishes */
 .right-ornament.is-fixed-left {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 16px; /* match targetX computation */
   right: auto;
@@ -173,16 +191,15 @@ button.hero-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* is-behind no longer changes z-index; keep for compatibility but neutral */
 .right-ornament.is-behind {
-  z-index: 100; /* same as base; only badge sits above */
+  z-index: 10; /* same as base; only badge sits above */
 }
 
 /* Ensure ornament SVGs never lose visibility during section transitions */
 .right-ornament .ornament-svg,
 .right-ornament .ornament-svg path {
-  opacity: 1 !important;
-  visibility: visible !important;
+opacity: 1 !important;
+visibility: visible !important;
 }
-
 /* Founder section layout */
 .founder-section {
   position: fixed;
@@ -247,11 +264,11 @@ button.hero-sub:active svg path:first-child { transform: translateY(1px); }
   width: 625px;
   height: 238px;
   left: 0; /* start at the left of the badge container */
-  top: 220px; /* a bit below the badge svg; tweak as needed */
-  font-family: 'Montserrat', sans-serif;
+  top: 240px; /* a bit below the badge svg; tweak as needed */
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
-  font-size: 25px;
+  font-size: 20px;
   line-height: 27px; /* 108% */
   color: #FFFFFF;
 }
@@ -261,11 +278,11 @@ button.hero-sub:active svg path:first-child { transform: translateY(1px); }
     width: 625px;
     height: 238px;
     left: 0; /* start at the left of the badge container */
-    top: 350px; /* a bit below the badge svg; tweak as needed */
-    font-family: 'Montserrat', sans-serif;
+    top: 360px; /* a bit below the badge svg; tweak as needed */
+    font-family: "Montserrat";
     font-style: normal;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 20px;
     line-height: 27px; /* 108% */
     color: #FFFFFF;
 }
@@ -273,7 +290,7 @@ button.hero-sub:active svg path:first-child { transform: translateY(1px); }
 /* Founder CTA button under description, similar to hero-sub */
 .founder-sub {
   position: absolute;
-  top: 550px; /* below the description block; adjust as needed */
+  top: 500px; /* below the description block; adjust as needed */
   left: 0;
   display: inline-flex;
   width: max-content;
@@ -298,8 +315,12 @@ button.founder-sub {
   cursor: pointer;
   text-align: inherit;
 }
+button.founder-sub svg path:first-child {
+  transition: all .3s ease-in-out;
+}
 button.founder-sub:focus { outline: none; }
 button.founder-sub:focus-visible { outline: 2px solid #ACFC17; outline-offset: 4px; border-radius: 6px; }
+button.founder-sub:hover svg path:first-child { filter: brightness(1.05); fill: #bd97ec; }
 button.founder-sub:hover svg path:first-child { filter: brightness(1.05); }
 button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
@@ -397,8 +418,8 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 .after-founder__stat-label {
   font-family: 'Coolvetica', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
-  font-weight: 800; /* heavy Coolvetica */
+  font-size: 2rem;
+  font-weight: 900; /* heavy Coolvetica */
   font-style: normal;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -573,7 +594,6 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   font-weight: 400;
   color: white;
   font-size: 16px;
-  z-index: 1001;
   cursor: pointer;
   padding: 4px;
   transition: all .1s ease-in-out;

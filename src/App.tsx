@@ -1,9 +1,9 @@
 import './App.css'
 import HeroBackground from './assets/images/HeroBackground.jpg'
-/* import HeroBiker from './assets/images/Manel.png' */
+import HeroBiker from './assets/images/Manel.png'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { Observer } from 'gsap/Observer'
+import { Observer } from 'gsap/observer'
 import foundedImg from "./assets/images/Founded.jpg";
 import MaskGradient from "./assets/svg/MaskGradient.tsx";
 import afterFounderImg from "./assets/images/AfterFounder.jpg";
@@ -39,6 +39,9 @@ function App() {
 
   const currentSection = useRef(0)
   const isAnimating = useRef(false)
+
+  const [heroActive, setHeroActive] = useState(true)
+  const [afterFounderActive, setAfterFounderActive] = useState(false)
 
   useEffect(() => {
     const heroEl = heroRef.current
@@ -138,6 +141,9 @@ function App() {
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       gsap.killTweensOf(tweenTargets)
 
+      setHeroActive(index === 0)
+      setAfterFounderActive(index === 2)
+
       const tl = gsap.timeline({
         defaults: { duration: 0.9, ease: 'power2.out' },
         onComplete: () => {
@@ -173,7 +179,7 @@ function App() {
              .to(founderBadgeEl, { autoAlpha: 1, duration: 0.5 }, 0.4)
              // Ensure ornament color is green in founder section
              .to(
-               ornamentEl.querySelectorAll('svg path'),
+                ornamentEl.querySelectorAll('svg path'),
                { fill: '#ACFC17', duration: 0.6, ease: 'power2.out' },
                0
              )
@@ -205,7 +211,7 @@ function App() {
       wheelSpeed: 1,
       tolerance: 6,
       preventDefault: true,
-      onChangeY: (self) => {
+      onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
         if (dy > 3 && currentSection.current < 2) {
@@ -292,6 +298,9 @@ function App() {
 
   return (
     <>
+     
+     <div style={{ position: "relative", width:"100%", height:"100%"}}>
+
       <div ref={liquidGlassContainerRef} className="liquid-glass-navbar-container">
         <LiquidGlass mode='polar'
           mouseContainer={liquidGlassContainerRef}
@@ -326,8 +335,7 @@ function App() {
           </div>
         </LiquidGlass>
       </div>
-     
-
+      
       <div className="right-ornament" aria-hidden="true" ref={ornamentRef}>
         {/* Two separate SVGs for the right ornament */}
         <svg
@@ -342,8 +350,7 @@ function App() {
         >
           <path d="M275.358 1045H10.2569C6.41485 1045 2.5728 1042.8 0.926203 1038.96C-0.72039 1035.12 -0.171509 1031.28 2.57281 1027.99L467.461 521.951L3.67052 16.4653C0.926203 13.7211 0.377343 9.33036 2.02394 5.48845C3.67053 1.64653 6.96372 0 11.3546 0H276.456C279.2 0 281.945 1.09769 283.591 3.29307L753.968 515.365C757.261 519.207 757.261 525.244 753.968 529.086L282.494 1042.26C280.298 1043.9 278.103 1045 275.358 1045ZM25.0762 1028.53H272.065L737.502 521.951L273.163 16.4653H26.174L484.476 515.365C487.769 519.207 487.769 525.244 484.476 529.086L25.0762 1028.53Z" fill="#ACFC17"/>
         </svg>
-
-
+      
         <svg
           className="ornament-svg svg-second"
           ref={secondSvgRef}
@@ -358,9 +365,9 @@ function App() {
         </svg>
       </div>
 
-      <div className="section hero" style={{ backgroundImage: `url(${HeroBackground})` }} ref={heroRef}>
+      <div style={{ backgroundImage: `url(${HeroBiker})` }} className={`hero-biker-div ${heroActive && 'above'}`} />
 
-        {/* <img src="./src/assets/images/Manel.png" className="hero-biker" /> */}
+      <div className="section hero" style={{ backgroundImage: `url(${HeroBackground})` }} ref={heroRef}>
 
         <div className="logo-container">
           <div className="logo-main">
@@ -413,11 +420,11 @@ function App() {
               <path d="M16.6851 174.63H12.4851V172.73C12.4851 170.28 11.4351 168.73 8.93506 168.73C6.53506 168.73 5.43506 170.23 5.43506 172.18V173.48C5.43506 174.93 5.83506 175.78 7.38506 177.03C9.63506 178.78 13.0351 180.58 14.8851 182.23C16.4351 183.58 17.2851 185.18 17.2851 188.23V190.28C17.2851 195.48 14.8351 198.33 9.03506 198.33C3.23506 198.33 0.835059 195.43 0.835059 189.98V188.08H5.08506V190.03C5.08506 192.73 6.23506 194.18 8.93506 194.18C11.2851 194.18 12.5851 193.03 12.5851 190.38V188.88C12.5851 186.83 12.0851 185.98 10.4351 184.68C8.13506 182.78 5.58506 181.53 3.53506 179.53C1.88506 177.83 0.985059 176.08 0.985059 173.43V171.98C0.985059 167.58 3.38506 164.53 8.88506 164.53C14.9351 164.53 16.6851 168.18 16.6851 173.18V174.63ZM34.9433 184.83H30.1933V198.03H25.6933V164.83H34.9433C39.5433 164.83 41.2433 167.28 41.2433 171.48V178.18C41.2433 182.38 39.5433 184.83 34.9433 184.83ZM30.1933 168.88V180.93H34.0433C36.1433 180.93 36.9933 179.68 36.9933 177.48V171.98C36.9933 169.98 36.1433 168.88 34.0433 168.88H30.1933ZM57.5276 198.03H53.1276L51.8276 190.23H45.7276L44.5276 198.03H40.1776L45.8276 164.83H51.8776L57.5276 198.03ZM48.6776 171.83L46.3276 186.38H51.2276L48.8776 171.83H48.6776ZM69.9499 190.28V184.48H74.1999V190.03C74.1999 195.58 71.5499 198.33 66.5499 198.33C61.3999 198.33 58.7499 195.33 58.7499 189.93V172.83C58.7499 167.28 61.3999 164.53 66.3999 164.53C71.4499 164.53 74.1999 167.28 74.1999 172.78V176.73H69.9499V172.78C69.9499 170.18 68.7999 168.73 66.5499 168.73C64.3499 168.73 63.1999 170.13 63.1999 172.73V190.28C63.1999 192.83 64.1999 194.18 66.5499 194.18C68.7999 194.18 69.9499 192.93 69.9499 190.28ZM89.314 198.03H76.914V164.83H88.914V168.88H81.314V178.58H88.264V182.68H81.314V193.98H89.314V198.03Z" fill="white"/>
             </svg>
             {/* Descriptive text under the last SVG */}
-            <p className="founder-description">
+            <p className="founder-description montserrat-regular">
               S PACE is a performance training centre built on science, experience, and adaptability. We design
               personalized training and nutrition programs for endurance, strength, and health.
             </p>
-            <p className="founder-description2">
+            <p className="founder-description2 montserrat-regular">
                 From elite athletes to individuals pursuing a healthier lifestyle, every program is tailored to specific goals, ensuring
                 progress that’s effective, sustainable, and built to last.
             </p>
@@ -461,7 +468,7 @@ function App() {
                 >
                   <path d="M28.7638 48.0421H19.1758V28.7641H-0.000191212V19.1761H19.1758V5.37634e-05H28.7638V19.1761H48.0418V28.7641H28.7638V48.0421Z" fill="#BD97EC"/>
                 </svg>
-                <CountUp from={0} to={100} duration={2} className="after-founder__stat-number" />
+                <CountUp from={0} to={100} duration={6} className="after-founder__stat-number" startWhen={afterFounderActive} />
               </div>
               <span className="after-founder__stat-label">Athletes Coached</span>
             </div>
@@ -477,7 +484,7 @@ function App() {
                 >
                   <path d="M28.7638 48.0421H19.1758V28.7641H-0.000191212V19.1761H19.1758V5.37634e-05H28.7638V19.1761H48.0418V28.7641H28.7638V48.0421Z" fill="#BD97EC"/>
                 </svg>
-                <CountUp from={0} to={20} duration={2.2} className="after-founder__stat-number" />
+                <CountUp from={0} to={20} duration={6.5} className="after-founder__stat-number" startWhen={afterFounderActive} />
               </div>
               <span className="after-founder__stat-label">National & international titles</span>
             </div>
@@ -493,7 +500,7 @@ function App() {
                 >
                   <path d="M28.7638 48.0421H19.1758V28.7641H-0.000191212V19.1761H19.1758V5.37634e-05H28.7638V19.1761H48.0418V28.7641H28.7638V48.0421Z" fill="#BD97EC"/>
                 </svg>
-                <CountUp from={0} to={10} duration={1.8} className="after-founder__stat-number" />
+                <CountUp from={0} to={10} duration={7} className="after-founder__stat-number" startWhen={afterFounderActive} />
               </div>
               <span className="after-founder__stat-label">Sports disciplinesached</span>
             </div>
@@ -509,13 +516,15 @@ function App() {
                 >
                   <path d="M28.7638 48.0421H19.1758V28.7641H-0.000191212V19.1761H19.1758V5.37634e-05H28.7638V19.1761H48.0418V28.7641H28.7638V48.0421Z" fill="#BD97EC"/>
                 </svg>
-                <CountUp from={0} to={5} duration={2.5} className="after-founder__stat-number" />
+                <CountUp from={0} to={5} duration={7.5} className="after-founder__stat-number" startWhen={afterFounderActive} />
               </div>
               <span className="after-founder__stat-label">Professional coaches</span>
             </div>
           </div>
         </div>
       </section>
+     </div>
+      
     </>
   )
 }
