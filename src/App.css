@@ -21,6 +21,7 @@ body { touch-action: none; }
 .hero { z-index: 1; }
 .founder-section { z-index: 1; }
 .after-founder { z-index: 1; }
+.before-who-we-train { z-index: 1; }
 
 /* Ornamento fixo para todas as secções */
 .right-ornament {
@@ -55,7 +56,9 @@ body { touch-action: none; }
 .right-ornament .svg-second { z-index: 1; }
 
 .hero {
+  /* width: 100vw; */
   width: 100vw;
+  /* min-width: 1450px; */
   height: 100vh;
   background-size: cover;
   --hero-bg-pos-x: 0%; /* anchor slightly left per current design */
@@ -71,7 +74,8 @@ body { touch-action: none; }
 }
 
 .hero-biker-div {
-  width: 100vw;
+  width: 45.2vw;
+/*   min-width: 656px; */
   height: 100vh;
   background-size: cover;
   --hero-bg-pos-x: 0%; /* anchor slightly left per current design */
@@ -82,15 +86,16 @@ body { touch-action: none; }
   display: flex;
   align-items: center;
   position: absolute;
+  right: 0;
+  top: 0;
   overflow-x: hidden;
   opacity: 0;
-  z-index: 1;
-  transition: opacity .4s ease-in-out;
-}
-.hero-biker-div.above {
-  opacity: 1;
   z-index: 11;
 }
+/* .hero-biker-div.above {
+  opacity: 1;
+  z-index: 11;
+} */
 
 .logo-container {
     margin-left: 100px;
@@ -204,6 +209,7 @@ visibility: visible !important;
 .founder-section {
   position: fixed;
   inset: 0;
+  /* z-index: 21; */
 }
 
 .founder__inner {
@@ -217,10 +223,44 @@ visibility: visible !important;
   position: absolute;
   inset: 0;                    /* cola aos 4 lados */
   width: 45vw;                 /* 45% do ecrã */
-  height: 100%;
+  height: 100vh;
   object-fit: cover;
   z-index: 2;
 }
+/* .founder__img-overlay {
+  position: absolute;
+  inset: 0;                    
+  width: 45vw;                
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0;
+  isolation: isolate;
+} */
+.founder-img-overlay-container {
+  width: 45vw;
+/*   min-width: 656px; */
+  height: 100vh;
+  background-size: cover;
+  --hero-bg-pos-x: 0%; /* anchor slightly left per current design */
+  /* Dynamic upward shift: min 60px, prefers 24vh, max 230px */
+  --hero-bg-shift: clamp(0px, 24vh, 0px);
+  background-position: var(--hero-bg-pos-x) calc(50% - var(--hero-bg-shift));
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow-x: hidden;
+  opacity: 0;
+  z-index: 21;
+}
+/* .founder__img-overlay.above {
+  opacity: 1;
+  z-index: 21;
+  isolation: isolate;
+} */
 
 /* MASK / BACKGROUND POR CIMA */
 .founder__mask {
@@ -337,6 +377,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   padding: 30px 0px;
   color: #ACFC17;
 }
+
 .after-founder__inner {
   max-width: 960px;
   width: 100%;
@@ -428,6 +469,39 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   padding-left: 56px; /* align label start with the number’s left edge, not under the SVG */
 }
 
+/* Before Who We Train section styles */
+.before-who-we-train {
+  min-height: 110vh;
+  background: linear-gradient(90deg, #03343d, #253e4b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0px;
+  color: #ACFC17;
+}
+.before-who-we-train .quote-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 55vw;
+  margin-bottom: 40px;
+}
+.quote-container h3 {
+  text-align: center;
+  line-height: 100%;
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 3rem;
+}
+.quote-container p {
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  line-height: 100%;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.5rem;
+}
 /* .glass-navbar-container {
   position: fixed;
   bottom: 64px;

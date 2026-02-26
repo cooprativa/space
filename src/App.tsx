@@ -1,10 +1,11 @@
 import './App.css'
 import HeroBackground from './assets/images/HeroBackground.jpg'
-import HeroBiker from './assets/images/Manel.png'
+import HeroBiker from './assets/images/Manel-narrow.png'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { Observer } from 'gsap/observer'
-import foundedImg from "./assets/images/Founded.jpg";
+import FounderImg from "./assets/images/Founder.jpg";
+import FounderImgAbove from "./assets/images/FounderAbove.png";
 import MaskGradient from "./assets/svg/MaskGradient.tsx";
 import afterFounderImg from "./assets/images/AfterFounder.jpg";
 import MaskGradient2 from "./assets/svg/MaskGradient2.tsx";
@@ -22,10 +23,16 @@ function App() {
   const ornamentRef = useRef<HTMLDivElement | null>(null)
   const founderRef = useRef<HTMLDivElement | null>(null)
   const afterFounderRef = useRef<HTMLDivElement | null>(null)
+  const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const founderBadgeRef = useRef<SVGSVGElement | null>(null)
   const racePlayedRef = useRef(false) // ensure race animation runs only once
 
-  /* Navlinks refs */
+  /* Imagens PNG em overlay - refs */
+  const heroImgContainerRef = useRef<HTMLDivElement | null>(null)
+  const founderImgContainerRef = useRef<HTMLDivElement | null>(null)
+  const afterFounderImgContainerRef = useRef<HTMLDivElement | null>(null)
+
+  /* Navlinks - refs */
   const heroLinkRef = useRef<HTMLDivElement | null>(null)
   const founderLinkRef = useRef<HTMLAnchorElement | null>(null)
   /*   const whoWeTrainLinkRef = useRef<HTMLAnchorElement | null>(null)
@@ -40,7 +47,8 @@ function App() {
   const currentSection = useRef(0)
   const isAnimating = useRef(false)
 
-  const [heroActive, setHeroActive] = useState(true)
+  /* const [heroActive, setHeroActive] = useState(true)
+  const [founderActive, setFounderActive] = useState(false) */
   const [afterFounderActive, setAfterFounderActive] = useState(false)
 
   useEffect(() => {
@@ -48,19 +56,31 @@ function App() {
     const ornamentEl = ornamentRef.current
     const founderEl = founderRef.current
     const afterFounderEl = afterFounderRef.current
+    const beforeWhoWeTrainEl = beforeWhoWeTrainRef.current
     const founderBadgeEl = founderBadgeRef.current
     const firstSvgEl = firstSvgRef.current
     const secondSvgEl = secondSvgRef.current
+
     /* Navlinks */
     const heroLink = heroLinkRef.current
     const founderLink = founderLinkRef.current
+
+    /* Imagens PNG em overlay */
+    const heroImgContainerEl = heroImgContainerRef.current
+    const founderImgContainerEl = founderImgContainerRef.current
+    const afterFounderImgContainerEl = afterFounderImgContainerRef.current
     
-    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !heroLink || !founderLink) return
+    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !heroLink || !founderLink) return
 
     // Estados iniciais (apenas hero visível)
     gsap.set(heroEl, { autoAlpha: 1 })
     gsap.set(founderEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(afterFounderEl, { autoAlpha: 0, xPercent: 100 })
+    gsap.set(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
+
+    gsap.set(heroImgContainerEl, { autoAlpha: 1 })
+    gsap.set(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
+    gsap.set(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
 
     // Initialize founder badge as hidden
     if (founderBadgeEl) {
@@ -92,12 +112,12 @@ function App() {
       const leaderOffset = leaderOffsetRef.current
       raceTl.to(
         firstSvgEl,
-        { x: leaderOffset, duration: 1.25, ease: 'power3.out' },
+        { x: leaderOffset, duration: 1.25, ease: 'power4.out' },
         0
       )
       raceTl.to(
         secondSvgEl,
-        { x: leaderOffset - finalGap * 2, duration: 1.25, ease: 'power3.out' },
+        { x: leaderOffset - finalGap * 2, duration: 1.25, ease: 'power4.out' },
         0.5
       )
 
@@ -137,12 +157,17 @@ function App() {
         founderEl,
         afterFounderEl,
         ornamentEl,
+        heroImgContainerEl,
+        founderImgContainerEl,
+        afterFounderImgContainerEl,
+        beforeWhoWeTrainEl
       ]
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       gsap.killTweensOf(tweenTargets)
 
-      setHeroActive(index === 0)
-      setAfterFounderActive(index === 2)
+      /* setHeroActive(index === 0)
+      setFounderActive(index === 1) */
+      setAfterFounderActive(index === 2)  /* Detect start of transition into AfterFounder section -> To trigger CountUp start animation */
 
       const tl = gsap.timeline({
         defaults: { duration: 0.9, ease: 'power2.out' },
@@ -155,9 +180,13 @@ function App() {
       switch (index) {
         case 0: {
            // Voltar ao HERO
-           tl.to(founderEl, { autoAlpha: 0, xPercent: 100 }, 0)
+           tl.to(heroEl, { autoAlpha: 1 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 100 }, 0)
-             .to(heroEl, { autoAlpha: 1 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -172,11 +201,17 @@ function App() {
         case 1: {
           // HERO -> FOUNDER or AFTER-FOUNDER -> FOUNDER
            tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             // Show founder image container when entering founder section
+             .to(founderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(ornamentEl, { x: computeOrnamentLeftX() }, 0)
              // Show founder badge when entering founder section
              .to(founderBadgeEl, { autoAlpha: 1, duration: 0.5 }, 0.4)
+             
              // Ensure ornament color is green in founder section
              .to(
                 ornamentEl.querySelectorAll('svg path'),
@@ -187,10 +222,34 @@ function App() {
         }
         case 2: {
           // FOUNDER -> AFTER-FOUNDER
-           tl.to(founderEl, { autoAlpha: 0 }, 0)
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
              .to(afterFounderEl, { autoAlpha: 1, xPercent: 0 }, 0)
-             .to(heroEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 3: {
+          // AFTER-FOUNDER -> BEFORE WHO WE TRAIN
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
              // Change ornament color to the requested purple when entering after-founder
@@ -214,14 +273,14 @@ function App() {
       onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
-        if (dy > 3 && currentSection.current < 2) {
+        if (dy > 4 && currentSection.current < 3) {
           goTo(currentSection.current + 1)
-        } else if (dy < -3 && currentSection.current > 0) {
+        } else if (dy < -4 && currentSection.current > 0) {
           goTo(currentSection.current - 1)
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 2) goTo(currentSection.current + 1)
+        if (!isAnimating.current && currentSection.current < 3) goTo(currentSection.current + 1)
       },
       onUp: () => {
         if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
@@ -365,7 +424,7 @@ function App() {
         </svg>
       </div>
 
-      <div style={{ backgroundImage: `url(${HeroBiker})` }} className={`hero-biker-div ${heroActive && 'above'}`} />
+      <div style={{ backgroundImage: `url(${HeroBiker})` }} ref={heroImgContainerRef} className="hero-biker-div" />
 
       <div className="section hero" style={{ backgroundImage: `url(${HeroBackground})` }} ref={heroRef}>
 
@@ -397,14 +456,21 @@ function App() {
           </div>
         </div>
       </div>
+      
+      <div style={{ backgroundImage: `url(${FounderImgAbove})` }} ref={founderImgContainerRef} className="founder-img-overlay-container" />
 
       <section className="section founder-section" ref={founderRef}>
         <div className="founder__inner">
           <img
-            src={foundedImg}
+            src={FounderImg}
             className="founder__img"
             alt="Founder"
           />
+          {/* <img
+            src={FounderImgAbove}
+            className={`founder__img-overlay ${founderActive && 'above'}`}
+            alt="Founder"
+          /> */}
           <MaskGradient />
           {/* Founder badge SVG: above the mask and aligned to the right */}
           <div className="founder-content founder-content--badge">
@@ -523,6 +589,18 @@ function App() {
           </div>
         </div>
       </section>
+
+      <section className="section before-who-we-train" ref={beforeWhoWeTrainRef}>
+        <div className='quote-container'>
+            <h3>“Helping every athlete, from Olympians to first-timers, evolve with purpose.”</h3>
+            <p>Manuel Nicolau</p>
+        </div>
+        
+      </section>
+      
+      {/* <section className="section before-who-we-train" ref={beforeWhoWeTrainRef}>
+        BEFORE WHO WE TRAIN SECTION
+      </section> */}
      </div>
       
     </>
