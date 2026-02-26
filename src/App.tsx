@@ -371,8 +371,10 @@ function App() {
     const handleEnter = () => setNavbarExpanded(true);
     const handleLeave = () => setNavbarExpanded(false);
 
-    glassEl.addEventListener('mouseenter', handleEnter);
-    glassEl.addEventListener('mouseleave', handleLeave);
+    setTimeout(() => {
+      glassEl.addEventListener('mouseenter', handleEnter);
+      glassEl.addEventListener('mouseleave', handleLeave);
+    }, 500);
 
     return () => {
       glassEl.removeEventListener('mouseenter', handleEnter);
@@ -659,6 +661,9 @@ function App() {
         <div className='heading-container'>
           <p>WHO WE TRAIN</p>
           <p>PROFILES</p>
+        </div>
+        <div className='intro-container'>
+          <p>Every sport demands something different. We tailor training to your discipline, your goals, and the way you perform best.</p>
         </div>
       </section>
       
