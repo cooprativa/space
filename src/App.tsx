@@ -3,7 +3,7 @@ import HeroBackground from './assets/images/HeroBackground.jpg'
 import HeroBiker from './assets/images/Manel-narrow.png'
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { Observer } from 'gsap/observer'
+import { Observer } from 'gsap/dist/Observer'
 import FounderImg from "./assets/images/Founder.jpg";
 import FounderImgAbove from "./assets/images/FounderAbove.png";
 import MaskGradient from "./assets/svg/MaskGradient.tsx";
@@ -14,6 +14,8 @@ import MaskGradient2 from "./assets/svg/MaskGradient2.tsx";
 import CountUp from './CountUp'
 /* import GlassSurface from './components/GlassSurface' */
 import LiquidGlass from 'liquid-glass-react'
+/* import ScrollReveal from './components/ScrollReveal'; */
+
 import { Bars3Icon } from '@heroicons/react/24/solid'
 
 // Registrar plugins
@@ -25,17 +27,20 @@ function App() {
   const founderRef = useRef<HTMLDivElement | null>(null)
   const afterFounderRef = useRef<HTMLDivElement | null>(null)
   const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
+  const whoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const founderBadgeRef = useRef<SVGSVGElement | null>(null)
   const racePlayedRef = useRef(false) // ensure race animation runs only once
 
   /* Imagens PNG em overlay - refs */
   const heroImgContainerRef = useRef<HTMLDivElement | null>(null)
   const founderImgContainerRef = useRef<HTMLDivElement | null>(null)
+  const estDateContainerRef = useRef<HTMLDivElement | null>(null)
   const afterFounderImgContainerRef = useRef<HTMLDivElement | null>(null)
 
   /* Navlinks - refs */
   const heroLinkRef = useRef<HTMLDivElement | null>(null)
   const founderLinkRef = useRef<HTMLAnchorElement | null>(null)
+  const whoWeTrainLinkRef = useRef<HTMLAnchorElement | null>(null)
   /*   const whoWeTrainLinkRef = useRef<HTMLAnchorElement | null>(null)
   const meetTheTeamLinkRef = useRef<HTMLAnchorElement | null>(null)
   const contactLinkRef = useRef<HTMLAnchorElement | null>(null) */
@@ -58,6 +63,7 @@ function App() {
     const founderEl = founderRef.current
     const afterFounderEl = afterFounderRef.current
     const beforeWhoWeTrainEl = beforeWhoWeTrainRef.current
+    const whoWeTrainEl = whoWeTrainRef.current
     const founderBadgeEl = founderBadgeRef.current
     const firstSvgEl = firstSvgRef.current
     const secondSvgEl = secondSvgRef.current
@@ -65,22 +71,26 @@ function App() {
     /* Navlinks */
     const heroLink = heroLinkRef.current
     const founderLink = founderLinkRef.current
+    const whoWeTrainLink = whoWeTrainLinkRef.current
 
     /* Imagens PNG em overlay */
     const heroImgContainerEl = heroImgContainerRef.current
     const founderImgContainerEl = founderImgContainerRef.current
+    const estDateContainerEl = estDateContainerRef.current
     const afterFounderImgContainerEl = afterFounderImgContainerRef.current
     
-    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !heroLink || !founderLink) return
+    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !heroLink || !founderLink) return
 
     // Estados iniciais (apenas hero visível)
     gsap.set(heroEl, { autoAlpha: 1 })
     gsap.set(founderEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(afterFounderEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
+    gsap.set(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
 
     gsap.set(heroImgContainerEl, { autoAlpha: 1 })
     gsap.set(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
+    gsap.set(estDateContainerEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
 
     // Initialize founder badge as hidden
@@ -160,8 +170,10 @@ function App() {
         ornamentEl,
         heroImgContainerEl,
         founderImgContainerEl,
+        estDateContainerEl,
         afterFounderImgContainerEl,
-        beforeWhoWeTrainEl
+        beforeWhoWeTrainEl,
+        whoWeTrainEl
       ]
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       gsap.killTweensOf(tweenTargets)
@@ -185,9 +197,11 @@ function App() {
              .to(heroImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(founderEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -206,9 +220,11 @@ function App() {
              .to(founderEl, { autoAlpha: 1, xPercent: 0 }, 0)
              // Show founder image container when entering founder section
              .to(founderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(ornamentEl, { x: computeOrnamentLeftX() }, 0)
              // Show founder badge when entering founder section
              .to(founderBadgeEl, { autoAlpha: 1, duration: 0.5 }, 0.4)
@@ -227,9 +243,11 @@ function App() {
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
              .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
              .to(afterFounderEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(afterFounderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -247,9 +265,33 @@ function App() {
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
              .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: .4, yPercent: 50 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 4: {
+          // BEFORE WHO WE TRAIN -> WHO WE TRAIN
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 0 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -274,14 +316,14 @@ function App() {
       onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
-        if (dy > 4 && currentSection.current < 3) {
+        if (dy > 5 && currentSection.current < 4) {
           goTo(currentSection.current + 1)
-        } else if (dy < -4 && currentSection.current > 0) {
+        } else if (dy < -5 && currentSection.current > 0) {
           goTo(currentSection.current - 1)
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 3) goTo(currentSection.current + 1)
+        if (!isAnimating.current && currentSection.current < 4) goTo(currentSection.current + 1)
       },
       onUp: () => {
         if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
@@ -304,6 +346,7 @@ function App() {
     /* Managing navlinks clicks */
     heroLink.addEventListener('click', () => goTo(0), { passive: false })
     founderLink.addEventListener('click', () => goTo(1), { passive: false })
+    if (whoWeTrainLink) whoWeTrainLink.addEventListener('click', () => goTo(4), { passive: false })
 
     // Cleanup
     return () => {
@@ -387,7 +430,7 @@ function App() {
             
             <div className={`navlinks ${ navbarExpanded ? "show" : "" }`}>
               <a ref={founderLinkRef} /* ref={whoWeAreLinkRef} */>Who We Are</a>
-              <a /* ref={whoWeTrainLinkRef} */>Who We Train</a>
+              <a ref={whoWeTrainLinkRef} /* ref={whoWeTrainLinkRef} */>Who We Train</a>
               <a /* ref={meetTheTeamLinkRef} */>Meet The Team</a>
               <a>Shop</a>
               <a /* ref={contactLinkRef} */>Contact</a>
@@ -458,8 +501,13 @@ function App() {
         </div>
       </div>
       
-      <div style={{ backgroundImage: `url(${FounderImgAbove})` }} ref={founderImgContainerRef} className="founder-img-overlay-container" />
+      <div ref={estDateContainerRef} className='est-date-container'>
+        <p>FOUNDED</p>
+        <p>2021</p>
+      </div>
 
+      <div style={{ backgroundImage: `url(${FounderImgAbove})` }} ref={founderImgContainerRef} className="founder-img-overlay-container" />
+          
       <section className="section founder-section" ref={founderRef}>
         <div className="founder__inner">
           <img
@@ -486,15 +534,22 @@ function App() {
               <path d="M69.3001 72.03H55.2301L44.4151 26.67L33.3901 72.03H19.7401L5.85965e-05 2.31003H15.5401L26.9851 47.46L36.6451 2.31003H51.9751L62.5801 47.46L73.9201 2.31003H88.8301L69.3001 72.03ZM148.517 72.03H133.817V40.74H106.622V72.03H92.0268V2.31003H106.622V28.56H133.817V2.31003H148.517V72.03ZM186.308 61.95C196.808 61.95 205.208 54.6 205.208 38.115C205.208 21.63 198.488 12.915 186.308 12.915C174.023 12.915 167.198 21.63 167.198 38.115C167.198 54.6 174.233 61.95 186.308 61.95ZM186.308 74.445C164.888 74.445 152.813 61.32 152.813 37.8C152.813 14.175 164.888 2.41399e-05 186.308 2.41399e-05C207.728 2.41399e-05 219.593 14.175 219.593 38.115C219.593 62.055 207.728 74.445 186.308 74.445ZM316.522 72.03H302.452L291.637 26.67L280.612 72.03H266.962L247.222 2.31003H262.762L274.207 47.46L283.867 2.31003H299.197L309.802 47.46L321.142 2.31003H336.052L316.522 72.03ZM392.168 72.03H339.248V2.31003H390.488V14.49H353.423V29.4H387.548V41.685H353.423V59.64H392.168V72.03ZM41.8951 128.675L33.1801 100.955H33.0751L24.1501 128.675H41.8951ZM66.3601 155.03H50.5051L46.0951 140.645H20.3701L15.4351 155.03H5.85965e-05L24.8851 85.31H41.7901L66.3601 155.03ZM102.541 97.385H83.7458V115.97H102.016C109.786 115.97 112.726 112.085 112.726 106.73C112.726 101.27 109.786 97.385 102.541 97.385ZM124.486 155.03H110.206V137.075C110.206 130.355 107.686 127.73 99.2858 127.73H83.7458V155.03H69.5708V85.31H104.956C117.871 85.31 126.376 93.92 126.376 105.47C126.376 112.925 122.701 119.225 115.981 121.64C122.176 123.635 124.486 127.1 124.486 135.29V155.03ZM183.194 155.03H130.274V85.31H181.514V97.49H144.449V112.4H178.574V124.685H144.449V142.64H183.194V155.03Z" fill="#BD97EC"/>
               <path d="M16.6851 174.63H12.4851V172.73C12.4851 170.28 11.4351 168.73 8.93506 168.73C6.53506 168.73 5.43506 170.23 5.43506 172.18V173.48C5.43506 174.93 5.83506 175.78 7.38506 177.03C9.63506 178.78 13.0351 180.58 14.8851 182.23C16.4351 183.58 17.2851 185.18 17.2851 188.23V190.28C17.2851 195.48 14.8351 198.33 9.03506 198.33C3.23506 198.33 0.835059 195.43 0.835059 189.98V188.08H5.08506V190.03C5.08506 192.73 6.23506 194.18 8.93506 194.18C11.2851 194.18 12.5851 193.03 12.5851 190.38V188.88C12.5851 186.83 12.0851 185.98 10.4351 184.68C8.13506 182.78 5.58506 181.53 3.53506 179.53C1.88506 177.83 0.985059 176.08 0.985059 173.43V171.98C0.985059 167.58 3.38506 164.53 8.88506 164.53C14.9351 164.53 16.6851 168.18 16.6851 173.18V174.63ZM34.9433 184.83H30.1933V198.03H25.6933V164.83H34.9433C39.5433 164.83 41.2433 167.28 41.2433 171.48V178.18C41.2433 182.38 39.5433 184.83 34.9433 184.83ZM30.1933 168.88V180.93H34.0433C36.1433 180.93 36.9933 179.68 36.9933 177.48V171.98C36.9933 169.98 36.1433 168.88 34.0433 168.88H30.1933ZM57.5276 198.03H53.1276L51.8276 190.23H45.7276L44.5276 198.03H40.1776L45.8276 164.83H51.8776L57.5276 198.03ZM48.6776 171.83L46.3276 186.38H51.2276L48.8776 171.83H48.6776ZM69.9499 190.28V184.48H74.1999V190.03C74.1999 195.58 71.5499 198.33 66.5499 198.33C61.3999 198.33 58.7499 195.33 58.7499 189.93V172.83C58.7499 167.28 61.3999 164.53 66.3999 164.53C71.4499 164.53 74.1999 167.28 74.1999 172.78V176.73H69.9499V172.78C69.9499 170.18 68.7999 168.73 66.5499 168.73C64.3499 168.73 63.1999 170.13 63.1999 172.73V190.28C63.1999 192.83 64.1999 194.18 66.5499 194.18C68.7999 194.18 69.9499 192.93 69.9499 190.28ZM89.314 198.03H76.914V164.83H88.914V168.88H81.314V178.58H88.264V182.68H81.314V193.98H89.314V198.03Z" fill="white"/>
             </svg>
-            {/* Descriptive text under the last SVG */}
-            <p className="founder-description montserrat-regular">
-              S PACE is a performance training centre built on science, experience, and adaptability. We design
-              personalized training and nutrition programs for endurance, strength, and health.
-            </p>
-            <p className="founder-description2 montserrat-regular">
-                From elite athletes to individuals pursuing a healthier lifestyle, every program is tailored to specific goals, ensuring
-                progress that’s effective, sustainable, and built to last.
-            </p>
+            {/* <ScrollReveal
+              baseOpacity={0.1}
+              enableBlur
+              baseRotation={3}
+              blurStrength={4}
+            > */}
+              <p className="founder-description montserrat-regular">
+                S PACE is a performance training centre built on science, experience, and adaptability. We design
+                personalized training and nutrition programs for endurance, strength, and health.
+              </p>
+              <p className="founder-description2 montserrat-regular">
+                  From elite athletes to individuals pursuing a healthier lifestyle, every program is tailored to specific goals, ensuring
+                  progress that’s effective, sustainable, and built to last.
+              </p>
+            {/* </ScrollReveal> */}
+            
             {/* Founder CTA button SVG (similar to hero-sub) */}
             <button className="founder-sub" type="button">
               <svg
@@ -594,17 +649,19 @@ function App() {
       </section>
 
       <section className="section before-who-we-train" ref={beforeWhoWeTrainRef}>
-        <div className='quote-container' style={{overflowY: "scroll", minHeight:"8000px"}}>
+        <div className='quote-container'>
             <h3>“Helping every athlete, from Olympians to first-timers, evolve with purpose.”</h3>
             <p>Manuel Nicolau</p>
-
         </div>
-        
       </section>
       
-      {/* <section className="section before-who-we-train" ref={beforeWhoWeTrainRef}>
-        BEFORE WHO WE TRAIN SECTION
-      </section> */}
+      <section className="section who-we-train" ref={whoWeTrainRef}>
+        <div className='heading-container'>
+          <p>WHO WE TRAIN</p>
+          <p>PROFILES</p>
+        </div>
+      </section>
+      
      </div>
       
     </>

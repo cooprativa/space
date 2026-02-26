@@ -218,6 +218,30 @@ visibility: visible !important;
   height: 100%;
 }
 
+.est-date-container {
+  position: absolute;
+  top: 120px;
+  left: 120px;
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.2rem;
+  color: #FFFFFF;
+  z-index: 30; /* above all founder content and ornaments */
+  display: flex;
+  flex-direction: column;
+}
+.est-date-container p {
+  text-shadow: rgba(0,0,0,0.3) 1px 0 20px; /* subtle glow for readability */
+}
+.est-date-container p:nth-of-type(1) {
+  font-size: 5vw;
+  font-weight: 500;
+  line-height: 60%;
+}
+.est-date-container p:nth-of-type(2) {
+  font-size: 3vw;
+  font-weight: 700;
+}
+
 /* IMAGEM FOUNDED — colada às bordas */
 .founder__img {
   position: absolute;
@@ -495,7 +519,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 /* Before Who We Train section styles */
 .before-who-we-train {
   min-height: 110vh;
-  background: linear-gradient(90deg, #03343d, #253e4b);
+  background: linear-gradient(180deg, transparent 0%, #253e4b 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -509,7 +533,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   justify-content: center;
   gap: 20px;
   max-width: 55vw;
-  margin-bottom: 40px;
+  margin-bottom: 300px;
 }
 .quote-container h3 {
   text-align: center;
@@ -525,6 +549,35 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 1.5rem;
 }
+
+/* Who We Train section styles */
+.who-we-train {
+  min-height: 110vh;
+  background: linear-gradient(180deg, transparent 0%, #03343d 100%);
+  display: relative;
+}
+.who-we-train .heading-container {
+  position: absolute;
+  top: 120px;
+  left: 120px;
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.2rem;
+  color: #FFFFFF;
+  z-index: 30; /* above all founder content and ornaments */
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+.who-we-train .heading-container p:nth-of-type(1) {
+  color: #bd97ec;
+  font-size: 6vw;
+  font-weight: 500;
+  line-height: 80%;
+}
+.who-we-train .heading-container p:nth-of-type(2) {
+  font-size: 3vw;
+  font-weight: 700;
+}
 /* .glass-navbar-container {
   position: fixed;
   bottom: 64px;
@@ -538,7 +591,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 .liquid-glass-navbar-container {
   position: fixed;
-  bottom: 64px;
+  bottom: 8vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
