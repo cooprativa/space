@@ -7,7 +7,8 @@ import { Observer } from 'gsap/observer'
 import FounderImg from "./assets/images/Founder.jpg";
 import FounderImgAbove from "./assets/images/FounderAbove.png";
 import MaskGradient from "./assets/svg/MaskGradient.tsx";
-import afterFounderImg from "./assets/images/AfterFounder.jpg";
+import AfterFounderImg from "./assets/images/AfterFounder.jpg";
+import AfterFounderImgAbove from "./assets/images/AfterFounderAbove.png";
 import MaskGradient2 from "./assets/svg/MaskGradient2.tsx";
 /* import NavLogo from "./assets/svg/NavLogo.tsx"; */
 import CountUp from './CountUp'
@@ -246,8 +247,8 @@ function App() {
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
              .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
-             .to(afterFounderEl, { autoAlpha: 1, xPercent: 0 }, 0)
-             .to(afterFounderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -512,10 +513,12 @@ function App() {
         </div>
       </section>
 
+      <div style={{ backgroundImage: `url(${AfterFounderImgAbove})` }} ref={afterFounderImgContainerRef} className="after-founder-img-overlay-container" />
+
       <section className="section after-founder" ref={afterFounderRef}>
         <div className="after-founder__inner">
           <img
-            src={afterFounderImg}
+            src={AfterFounderImg}
             className="After_Founder__img"
             alt="Founder"
           />
@@ -591,9 +594,10 @@ function App() {
       </section>
 
       <section className="section before-who-we-train" ref={beforeWhoWeTrainRef}>
-        <div className='quote-container'>
+        <div className='quote-container' style={{overflowY: "scroll", minHeight:"8000px"}}>
             <h3>“Helping every athlete, from Olympians to first-timers, evolve with purpose.”</h3>
             <p>Manuel Nicolau</p>
+
         </div>
         
       </section>
