@@ -20,6 +20,10 @@ import CardSVGTriathlon from "./assets/svg/card-svg-triathlon.svg";
 import ProfileImgAthletics from "./assets/images/profile-card-athletics.jpg";
 import CardSVGAthletics from "./assets/svg/card-svg-athletics.svg";
 
+/* Scaffold Overlay images */
+import GreenLogo from "./assets/svg/green-logo.svg";
+import WhiteWarning from "./assets/svg/white-warning.svg";
+import ScaffoldOverlayBackground from "./assets/images/scaffold-overlay-background.jpg";
 
 /* import NavLogo from "./assets/svg/NavLogo.tsx"; */
 import CountUp from './CountUp'
@@ -701,7 +705,7 @@ function App() {
       
       <section className="section who-we-train" ref={whoWeTrainRef}>
         <div className='heading-container'>
-          <p>WHO WE TRAIN</p>
+          <h2>WHO WE TRAIN</h2>
           <p>PROFILES</p>
         </div>
         <div className='intro-container'>
@@ -772,9 +776,19 @@ function App() {
           </div>
         </div>
       </section>
-      
+          
+      <div className="scaffold-overlay" style={{ backgroundImage: `url(${ScaffoldOverlayBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <img src={GreenLogo} alt="" />
+        <div>
+          <img src={WhiteWarning} alt="" />
+          <h4>OPTIMIZED FOR LARGER SCREENS</h4>
+          <p>Work in progress.<br/>For the best experience, please resize your browser window or view this page on a larger screen.</p>
+        </div>
+        
+      </div>
+
      </div>
-      
+    
     </>
   )
 }
