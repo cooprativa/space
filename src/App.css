@@ -326,6 +326,7 @@ visibility: visible !important;
 /* Descriptive text under the badge SVG */
 .founder-description {
   position: absolute;
+  text-align: left;
   width: 625px;
   height: 238px;
   left: 0; /* start at the left of the badge container */
@@ -340,6 +341,7 @@ visibility: visible !important;
 
 .founder-description2 {
     position: absolute;
+    text-align: left;
     width: 625px;
     height: 238px;
     left: 0; /* start at the left of the badge container */
@@ -593,10 +595,12 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   display: flex;
   flex-direction: column;
   max-width: 400px;
-  line-height: 120%;
+  
 }
 .who-we-train .intro-container p {
   text-align: left;
+  font-size: 1.4rem;
+  line-height: 130%;
 }
 
 .who-we-train-second {
@@ -630,6 +634,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   height: fit-content;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
   padding: 10px;
+  transform: scale(120%); /* scale up based on viewport width, with a base of 110% at 1450px */
 }
 
 .flip-card.profile-card-cycling {
@@ -637,42 +642,36 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   left: 40vw;
   width: 380px;
   height: 300px;
-  transform: scale(110%);
 }
 .flip-card.profile-card-swimmers {
   top: 30vh;
   left: 72vw;
   width: 300px;
   height: 460px;
-  transform: scale(110%);
 }
 .flip-card.profile-card-triathlon {
-  top: 8vh;
+  top: 7vh;
   left: 10vw;
   width: 400px;
-  height: 320px;
-  transform: scale(110%);
+  height: 300px;
 }
 .flip-card.profile-card-athletics {
-  top: 52vh;
+  top: 53vh;
   left: 5vw;
   width: 400px;
   height: 320px;
-  transform: scale(110%);
 }
 .flip-card.profile-card-drivers {
   top: 25vh;
   left: 45vw;
   width: 320px;
   height: 360px;
-  transform: scale(110%);
 }
 .flip-card.profile-card-team {
   top: 38vh;
   left: 72vw;
   width: 300px;
   height: 422px;
-  transform: scale(110%);
 }
 
 .flip-card .flip-card-inner > img {
