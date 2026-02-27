@@ -10,6 +10,17 @@ import MaskGradient from "./assets/svg/MaskGradient.tsx";
 import AfterFounderImg from "./assets/images/AfterFounder.jpg";
 import AfterFounderImgAbove from "./assets/images/AfterFounderAbove.png";
 import MaskGradient2 from "./assets/svg/MaskGradient2.tsx";
+import ProfileImgCycling from "./assets/images/profile-card-cycling.jpg";
+import CardSVGCyclingFront from "./assets/svg/card-svg-cycling-front.svg";
+/* import CardSVGCyclingBack from "./assets/svg/card-svg-cycling-back.svg"; */
+import ProfileImgSwimmers from "./assets/images/profile-card-swimmers.jpg";
+import CardSVGSwimmers from "./assets/svg/card-svg-swimmers.svg";
+import ProfileImgTriathlon from "./assets/images/profile-card-triathlon.jpg";
+import CardSVGTriathlon from "./assets/svg/card-svg-triathlon.svg";
+import ProfileImgAthletics from "./assets/images/profile-card-athletics.jpg";
+import CardSVGAthletics from "./assets/svg/card-svg-athletics.svg";
+
+
 /* import NavLogo from "./assets/svg/NavLogo.tsx"; */
 import CountUp from './CountUp'
 /* import GlassSurface from './components/GlassSurface' */
@@ -28,6 +39,7 @@ function App() {
   const afterFounderRef = useRef<HTMLDivElement | null>(null)
   const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const whoWeTrainRef = useRef<HTMLDivElement | null>(null)
+  const whoWeTrainSecondRef = useRef<HTMLDivElement | null>(null)
   const founderBadgeRef = useRef<SVGSVGElement | null>(null)
   const racePlayedRef = useRef(false) // ensure race animation runs only once
 
@@ -64,6 +76,7 @@ function App() {
     const afterFounderEl = afterFounderRef.current
     const beforeWhoWeTrainEl = beforeWhoWeTrainRef.current
     const whoWeTrainEl = whoWeTrainRef.current
+    const whoWeTrainSecondEl = whoWeTrainSecondRef.current
     const founderBadgeEl = founderBadgeRef.current
     const firstSvgEl = firstSvgRef.current
     const secondSvgEl = secondSvgRef.current
@@ -79,7 +92,7 @@ function App() {
     const estDateContainerEl = estDateContainerRef.current
     const afterFounderImgContainerEl = afterFounderImgContainerRef.current
     
-    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !heroLink || !founderLink) return
+    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !whoWeTrainSecondEl /* || !heroLink || !founderLink */) return
 
     // Estados iniciais (apenas hero visível)
     gsap.set(heroEl, { autoAlpha: 1 })
@@ -87,6 +100,7 @@ function App() {
     gsap.set(afterFounderEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
+    gsap.set(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 })
 
     gsap.set(heroImgContainerEl, { autoAlpha: 1 })
     gsap.set(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
@@ -173,7 +187,8 @@ function App() {
         estDateContainerEl,
         afterFounderImgContainerEl,
         beforeWhoWeTrainEl,
-        whoWeTrainEl
+        whoWeTrainEl,
+        whoWeTrainSecondEl
       ]
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       gsap.killTweensOf(tweenTargets)
@@ -225,6 +240,7 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(ornamentEl, { x: computeOrnamentLeftX() }, 0)
              // Show founder badge when entering founder section
              .to(founderBadgeEl, { autoAlpha: 1, duration: 0.5 }, 0.4)
@@ -248,6 +264,7 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -270,6 +287,7 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(whoWeTrainEl, { autoAlpha: .4, yPercent: 50 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -290,8 +308,32 @@ function App() {
              .to(estDateContainerEl, { autoAlpha: 0 }, 0)
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
-             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 0 }, 0)
-             .to(whoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 1, xPercent: 0, yPercent: 0 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 5: {
+          // WHO WE TRAIN -> WHO WE TRAIN SECOND
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -316,14 +358,14 @@ function App() {
       onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
-        if (dy > 5 && currentSection.current < 4) {
+        if (dy > 6 && currentSection.current < 5) {
           goTo(currentSection.current + 1)
-        } else if (dy < -5 && currentSection.current > 0) {
+        } else if (dy < -6 && currentSection.current > 0) {
           goTo(currentSection.current - 1)
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 4) goTo(currentSection.current + 1)
+        if (!isAnimating.current && currentSection.current < 5) goTo(currentSection.current + 1)
       },
       onUp: () => {
         if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
@@ -335,7 +377,7 @@ function App() {
       const key = e.key
       if (key === 'ArrowDown' || key === 'PageDown' || (key === ' ' && !e.shiftKey)) {
         e.preventDefault()
-        if (currentSection.current < 2) goTo(currentSection.current + 1)
+        if (currentSection.current < 5) goTo(currentSection.current + 1)
       } else if (key === 'ArrowUp' || key === 'PageUp' || (key === ' ' && e.shiftKey)) {
         e.preventDefault()
         if (currentSection.current > 0) goTo(currentSection.current - 1)
@@ -344,8 +386,8 @@ function App() {
     window.addEventListener('keydown', onKey, { passive: false })
 
     /* Managing navlinks clicks */
-    heroLink.addEventListener('click', () => goTo(0), { passive: false })
-    founderLink.addEventListener('click', () => goTo(1), { passive: false })
+    if (heroLink) heroLink.addEventListener('click', () => goTo(0), { passive: false })
+    if (founderLink) founderLink.addEventListener('click', () => goTo(1), { passive: false })
     if (whoWeTrainLink) whoWeTrainLink.addEventListener('click', () => goTo(4), { passive: false })
 
     // Cleanup
@@ -664,6 +706,70 @@ function App() {
         </div>
         <div className='intro-container'>
           <p>Every sport demands something different. We tailor training to your discipline, your goals, and the way you perform best.</p>
+        </div>
+        
+        {/* <div className='profile-card'>
+          <img src={ProfileImgCycling} alt="" />
+          <p>Cycling</p>
+        </div> */}
+
+        <div className="flip-card profile-card-cycling">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">
+              <img src={ProfileImgCycling} alt="" />
+              <h3>Cycling</h3>
+            </div>
+            <div className="flip-card-back">
+              <p>Cycling is more than just endurance it’s about mastering power, pacing, and recovery across every ride. Whether on the road, trail, or mountain, our training focuses on developing sustainable performance through structured sessions, data analysis, and strength work. We help cyclists and MTB riders optimize their physical and mental resilience, ensuring they’re prepared to perform at their best in every terrain and condition.</p>
+              <h3>Cycling</h3>
+            </div>
+            <img className='svg-front' src={CardSVGCyclingFront} alt="" />
+            {/* <img className='svg-back' src={CardSVGCyclingBack} alt="" /> */}
+          </div>
+        </div>
+
+        <div className="flip-card profile-card-swimmers">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">
+              <h3>Swimmers</h3>
+              <img src={ProfileImgSwimmers} alt="" />
+            </div>
+            <div className="flip-card-back">
+              <h3>Swimmers</h3>
+              <p>Water swimming requires more than just technique, it’s about efficiency, adaptability, and mental strength. Our training approach helps swimmers develop endurance, pacing, and breathing control to perform in unpredictable environments.By combining individualized training plans with strength and conditioning, we prepare athletes to face any distance or condition with confidence and precision.</p>
+            </div>
+            <img className='svg-front' src={CardSVGSwimmers} alt="" />
+          </div>
+        </div>
+      </section>
+
+      <section className="section who-we-train-second" ref={whoWeTrainSecondRef}>
+        <div className="flip-card profile-card-triathlon">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">
+              <h3>Triathlon</h3>
+              <img src={ProfileImgTriathlon} alt="" />
+            </div>
+            <div className="flip-card-back">
+              <h3>Triathlon</h3>
+              <p>High performance in triathlon is built on adaptation — the body’s ability to respond to stress, recover, and evolve. Every training session, every recovery day, and every lifestyle factor contributes to that process. Real progress happens when training load, recovery, and life are in balance. Our methodology is grounded in science and guided by individualization. Each athlete responds differently to the same stimulus; genetics, experience, and daily context shape how adaptation occurs.</p>
+            </div>
+            <img className='svg-front' src={CardSVGTriathlon} alt="" />
+          </div>
+        </div>
+
+        <div className="flip-card profile-card-athletics">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">
+              <img src={ProfileImgAthletics} alt="" />
+              <h3>Athletics</h3>
+            </div>
+            <div className="flip-card-back">
+              <p>High performance in triathlon is built on adaptation — the body’s ability to respond to stress, recover, and evolve. Every training session, every recovery day, and every lifestyle factor contributes to that process. Real progress happens when training load, recovery, and life are in balance. Our methodology is grounded in science and guided by individualization. Each athlete responds differently to the same stimulus; genetics, experience, and daily context shape how adaptation occurs. That’s why our programs are designed around your physiology, your goals, and your reality — not a generic formula.</p>
+              <h3>Athletics</h3>
+            </div>
+            <img className='svg-front' src={CardSVGAthletics} alt="" />
+          </div>
         </div>
       </section>
       
