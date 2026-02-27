@@ -19,6 +19,10 @@ import ProfileImgTriathlon from "./assets/images/profile-card-triathlon.jpg";
 import CardSVGTriathlon from "./assets/svg/card-svg-triathlon.svg";
 import ProfileImgAthletics from "./assets/images/profile-card-athletics.jpg";
 import CardSVGAthletics from "./assets/svg/card-svg-athletics.svg";
+import ProfileImgDrivers from "./assets/images/profile-card-drivers.jpg";
+import CardSVGDrivers from "./assets/svg/card-svg-drivers.svg";
+import ProfileImgTeam from "./assets/images/profile-card-team.jpg";
+import CardSVGTeam from "./assets/svg/card-svg-team.svg";
 
 /* Scaffold Overlay images */
 import GreenLogo from "./assets/svg/green-logo.svg";
@@ -379,10 +383,10 @@ function App() {
     const onKey = (e: KeyboardEvent) => {
       if (isAnimating.current) return
       const key = e.key
-      if (key === 'ArrowDown' || key === 'PageDown' || (key === ' ' && !e.shiftKey)) {
+      if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight'|| (key === ' ' && !e.shiftKey)) {
         e.preventDefault()
         if (currentSection.current < 5) goTo(currentSection.current + 1)
-      } else if (key === 'ArrowUp' || key === 'PageUp' || (key === ' ' && e.shiftKey)) {
+      } else if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' || (key === ' ' && e.shiftKey)) {
         e.preventDefault()
         if (currentSection.current > 0) goTo(currentSection.current - 1)
       }
@@ -740,7 +744,7 @@ function App() {
             </div>
             <div className="flip-card-back">
               <h3>Swimmers</h3>
-              <p>Water swimming requires more than just technique, it’s about efficiency, adaptability, and mental strength. Our training approach helps swimmers develop endurance, pacing, and breathing control to perform in unpredictable environments.By combining individualized training plans with strength and conditioning, we prepare athletes to face any distance or condition with confidence and precision.</p>
+              <p>Water swimming requires more than just technique, it’s about efficiency, adaptability, and mental strength. Our training approach helps swimmers develop endurance, pacing, and breathing control to perform in unpredictable environments. By combining individualized training plans with strength and conditioning, we prepare athletes to face any distance or condition with confidence and precision.<br/><br/>Open water swimming is more than a sport — it’s a journey of adaptation, confidence, and connection with the unpredictable. The ocean demands respect and composure; it challenges not just your technique, but your mindset.</p>
             </div>
             <img className='svg-front' src={CardSVGSwimmers} alt="" />
           </div>
@@ -769,10 +773,38 @@ function App() {
               <h3>Athletics</h3>
             </div>
             <div className="flip-card-back">
-              <p>High performance in triathlon is built on adaptation — the body’s ability to respond to stress, recover, and evolve. Every training session, every recovery day, and every lifestyle factor contributes to that process. Real progress happens when training load, recovery, and life are in balance. Our methodology is grounded in science and guided by individualization. Each athlete responds differently to the same stimulus; genetics, experience, and daily context shape how adaptation occurs. That’s why our programs are designed around your physiology, your goals, and your reality — not a generic formula.</p>
+              <p>Performance in running comes from more than mileage — it’s the result of how your body adapts to every stimulus, from training load to recovery, from stress to sleep. Endurance isn’t built overnight; it’s developed through a process that balances effort, rest, and consistency over time. Our training philosophy combines science with individual context. Each runner adapts differently — shaped by physiology, background, and daily life. That’s why every plan we design is personal, aligning the right intensity, volume, and recovery to support continuous adaptation and sustainable progress.</p>
               <h3>Athletics</h3>
             </div>
             <img className='svg-front' src={CardSVGAthletics} alt="" />
+          </div>
+        </div>
+
+        <div className="flip-card profile-card-drivers">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">
+              <img src={ProfileImgDrivers} alt="" />
+              <h3>Drivers</h3>
+            </div>
+            <div className="flip-card-back">
+              <p>In motorsport, physical conditioning is the foundation of performance. Drivers and riders must sustain high heart rates, intense vibration, and extreme G-forces — all while maintaining precision and focus. Our training develops core and neck strength, aerobic and muscular endurance, and postural stability to resist fatigue and enhance control throughout every lap. y targeting the specific demands of driving — from reaction time to heat tolerance — we help athletes perform with consistency and precision under pressure. Because in motorsport, the strongest engine is the athlete’s body.</p>
+              <h3>Drivers</h3>
+            </div>
+            <img className='svg-front' src={CardSVGDrivers} alt="" />
+          </div>
+        </div>
+
+        <div className="flip-card profile-card-team">
+          <div className="flip-card-inner">
+            <div className="flip-card-front">
+              <img src={ProfileImgTeam} alt="" />
+              <h3>Team sports</h3>
+            </div>
+            <div className="flip-card-back">
+              <p>In team sports, strength is more than power — it’s the foundation for performance, resilience, and longevity. Football, basketball, futsal, or hockey all demand acceleration, stability, and the ability to repeat high-intensity efforts under fatigue. Without strength, speed and skill can’t be fully expressed. Our approach to strength training is performance-driven and sport-specific. We focus on developing explosive power, joint stability, and muscular endurance, building a body capable of producing force efficiently and absorbing impact safely.</p>
+              <h3>Team sports</h3>
+            </div>
+            <img className='svg-front' src={CardSVGTeam} alt="" />
           </div>
         </div>
       </section>
@@ -784,7 +816,6 @@ function App() {
           <h4>OPTIMIZED FOR LARGER SCREENS</h4>
           <p>Work in progress.<br/>For the best experience, please resize your browser window or view this page on a larger screen.</p>
         </div>
-        
       </div>
 
      </div>
