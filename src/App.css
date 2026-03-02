@@ -92,11 +92,6 @@ body { touch-action: none; }
   opacity: 0;
   z-index: 11;
 }
-/* .hero-biker-div.above {
-  opacity: 1;
-  z-index: 11;
-} */
-
 .logo-container {
     margin-left: 100px;
     margin-bottom: 100px;
@@ -175,17 +170,6 @@ button.hero-sub:focus-visible { outline: 2px solid #ACFC17; outline-offset: 4px;
 button.hero-sub:hover svg path:first-child { filter: brightness(1.05); fill: #bd97ec; }
 button.hero-sub:active svg path:first-child { transform: translateY(1px); }
 
-/* Right-aligned decorative SVG positioning */
-.right-ornament {
-  position: absolute; /* ensure it isn't clipped by section overflow during transitions */
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  display: block;
-  pointer-events: none; /* purely decorative */
-  will-change: transform; /* hint for smoother GPU-accelerated transform */
-}
-
 /* Fixed-left state after the scroll animation finishes */
 .right-ornament.is-fixed-left {
   position: absolute;
@@ -252,16 +236,6 @@ visibility: visible !important;
   object-fit: cover;
   z-index: 2;
 }
-/* .founder__img-overlay {
-  position: absolute;
-  inset: 0;                    
-  width: 45vw;                
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  opacity: 0;
-  isolation: isolate;
-} */
 .founder-img-overlay-container {
   width: 45vw;
 /*   min-width: 656px; */
@@ -281,12 +255,6 @@ visibility: visible !important;
   opacity: 0;
   z-index: 21;
 }
-/* .founder__img-overlay.above {
-  opacity: 1;
-  z-index: 21;
-  isolation: isolate;
-} */
-
 /* MASK / BACKGROUND POR CIMA */
 .founder__mask {
   position: absolute;
@@ -388,7 +356,6 @@ button.founder-sub svg path:first-child {
 button.founder-sub:focus { outline: none; }
 button.founder-sub:focus-visible { outline: 2px solid #ACFC17; outline-offset: 4px; border-radius: 6px; }
 button.founder-sub:hover svg path:first-child { filter: brightness(1.05); fill: #bd97ec; }
-button.founder-sub:hover svg path:first-child { filter: brightness(1.05); }
 button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Remove spacer since we pin without extra spacing */
@@ -608,24 +575,6 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   background: linear-gradient(90deg, #345A7000 0%, #131B1E88 30%, #131B1E88 80%, #131B1E00 100%);
   display: relative;
 }
-/* .who-we-train .profile-card {
-  position: absolute;
-  top: 300px;
-  left: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 400px;
-  padding: 20px;
-  background: #ACFC17;
-  border-radius: 20px;
-  gap: 20px;
-}
-.who-we-train .profile-card p {
-  font-size: 1.5rem;
-  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-} */
-
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   position: absolute;
@@ -724,17 +673,6 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   opacity: 0;
   transition: opacity .5s ease-in-out;
 }
-/* .flip-card.profile-card-cycling .flip-card-inner > .svg-back {
-  opacity: 0;
-  left: 15px;
-  bottom: 50px;
-  width: 200px;
-}
-.flip-card.profile-card-cycling:hover .svg-back {
-  opacity: 1;
-  transition: opacity .5s ease-in-out;
-} */
-
 /* This container is needed to position the front and back side */
 .flip-card-inner {
   position: relative;
@@ -846,17 +784,6 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   color: #0B2E42;
 }
 
-/* .glass-navbar-container {
-  position: fixed;
-  bottom: 64px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 40px;
-  z-index: 1000;
-  overflow: hidden;
-  backdrop-filter: blur(20px);
-} */
-
 .liquid-glass-navbar-container {
   position: fixed;
   bottom: 7vh;
@@ -891,31 +818,11 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   overflow: hidden;
 }
 
-/* Remove the 0.2s transition from LiquidGlass overlay divs so they follow
-   the glass size instantly (updated every frame via resize events).
-   Only keep transform transition for the elastic mouse-follow effect. */
-   
-/* .liquid-glass-navbar-container > div:nth-of-type(1) {
-   transition: transform 0.4s ease-out !important;
-} */
 .liquid-glass-navbar-container > div:nth-of-type(2) {
    background: rgba(0,0,0,0.5);
    backdrop-filter: blur(20px) saturate(130%);
 }
 
-
-/* .floating-navbar {
-  display: flex;
-  gap: 36px;
-  align-items: center;
-} */
-
-/* .floating-navbar {
-  min-width: max-content;
-  display: flex;
-  gap: 36px;
-  align-items: center;
-} */
 
 /* Collapsed (default) → narrow; Expanded (on hover) → wide */
 .floating-navbar {
@@ -940,11 +847,6 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   left: 1px;
   border-radius: 40px;
 }
-/* .floating-navbar > img {
-  width: 120px;
-  z-index: 1001;
-  cursor: pointer;
-} */
 .nav-logo-container {
   position: relative;
   min-width: fit-content;
