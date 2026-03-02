@@ -97,7 +97,7 @@ function App() {
         defaults: { duration: 0.9, ease: 'power2.out' },
         onComplete: () => {
           currentSection.current = index
-          setTimeout(() => {isAnimating.current = false}, 400) // ensure section state updates before allowing new scrolls
+          setTimeout(() => { isAnimating.current = false }, 250)
         },
       })
 
