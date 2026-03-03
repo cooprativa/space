@@ -6,9 +6,10 @@ interface NavbarProps {
   onHeroClick: () => void;
   onFounderClick: () => void;
   onWhoWeTrainClick: () => void;
+  onMeetTheTeamClick: () => void;
 }
 
-export default function Navbar({ onHeroClick, onFounderClick, onWhoWeTrainClick }: NavbarProps) {
+export default function Navbar({ onHeroClick, onFounderClick, onWhoWeTrainClick, onMeetTheTeamClick }: NavbarProps) {
   const liquidGlassContainerRef = useRef<HTMLDivElement>(null);
   const [navbarExpanded, setNavbarExpanded] = useState(false);
 
@@ -78,7 +79,7 @@ export default function Navbar({ onHeroClick, onFounderClick, onWhoWeTrainClick 
           <div className={`navlinks ${navbarExpanded ? 'show' : ''}`}>
             <a onClick={onFounderClick}>Who We Are</a>
             <a onClick={onWhoWeTrainClick}>Who We Train</a>
-            <a>Meet The Team</a>
+            <a onClick={onMeetTheTeamClick}>Meet The Team</a>
             <a>Shop</a>
             <a>Contact</a>
           </div>

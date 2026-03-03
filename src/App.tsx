@@ -12,6 +12,9 @@ import AfterFounderSection from './components/sections/AfterFounderSection'
 import BeforeWhoWeTrainSection from './components/sections/BeforeWhoWeTrainSection'
 import WhoWeTrainSection from './components/sections/WhoWeTrainSection'
 import WhoWeTrainSecondSection from './components/sections/WhoWeTrainSecondSection'
+import MeetTheTeamSection from './components/sections/MeetTheTeamSection'
+import MeetTheTeamSecondSection from './components/sections/MeetTheTeamSecondSection'
+import OurCoachesSection from './components/sections/OurCoachesSection'
 
 // Registrar plugins
 gsap.registerPlugin(Observer)
@@ -24,6 +27,10 @@ function App() {
   const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const whoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const whoWeTrainSecondRef = useRef<HTMLDivElement | null>(null)
+  const meetTheTeamRef = useRef<HTMLDivElement | null>(null)
+  const meetTheTeamSecondRef = useRef<HTMLDivElement | null>(null)
+  const ourCoachesRef = useRef<HTMLDivElement | null>(null)
+
   const afterFounderImgContainerRef = useRef<HTMLDivElement | null>(null)
 
   // Expose goTo for Navbar callbacks (goTo is defined inside the main useEffect)
@@ -46,9 +53,12 @@ function App() {
     const beforeWhoWeTrainEl = beforeWhoWeTrainRef.current
     const whoWeTrainEl = whoWeTrainRef.current
     const whoWeTrainSecondEl = whoWeTrainSecondRef.current
+    const meetTheTeamEl = meetTheTeamRef.current
+    const meetTheTeamSecondEl = meetTheTeamSecondRef.current
+    const ourCoachesEl = ourCoachesRef.current
     const afterFounderImgContainerEl = afterFounderImgContainerRef.current
 
-    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !whoWeTrainSecondEl) return
+    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !whoWeTrainSecondEl || !meetTheTeamEl || !ourCoachesEl) return
 
     // Estados iniciais (apenas hero visível)
     gsap.set(heroEl, { autoAlpha: 1 })
@@ -57,7 +67,9 @@ function App() {
     gsap.set(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 })
-
+    gsap.set(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 })
+    gsap.set(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 })
+    gsap.set(ourCoachesEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(heroImgContainerEl, { autoAlpha: 1 })
     gsap.set(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(estDateContainerEl, { autoAlpha: 0, xPercent: 100 })
@@ -86,7 +98,10 @@ function App() {
         afterFounderImgContainerEl,
         beforeWhoWeTrainEl,
         whoWeTrainEl,
-        whoWeTrainSecondEl
+        whoWeTrainSecondEl,
+        meetTheTeamEl,
+        meetTheTeamSecondEl,
+        ourCoachesEl
       ]
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       gsap.killTweensOf(tweenTargets)
@@ -113,6 +128,10 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+             .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -137,6 +156,9 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: ornamentHandle?.computeLeftX() ?? 0 }, 0)
              // Show founder badge when entering founder section
              .to(founderBadgeEl, { autoAlpha: 1, duration: 0.5 }, 0.4)
@@ -161,6 +183,9 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -184,6 +209,9 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(whoWeTrainEl, { autoAlpha: .4, yPercent: 50 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -207,6 +235,9 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 1, xPercent: 0, yPercent: 0 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -230,6 +261,87 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 6: {
+          // WHO WE TRAIN SECOND -> MEET THE TEAM
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: 0 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 7: {
+          // MEET THE TEAM -> MEET THE TEAM SECOND
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 0 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 8: {
+          // MEET THE TEAM SECOND -> OUR COACHES
+           tl.to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -257,14 +369,14 @@ function App() {
       onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
-        if (dy > 6 && currentSection.current < 5) {
+        if (dy > 7 && currentSection.current < 8) {
           goTo(currentSection.current + 1)
-        } else if (dy < -6 && currentSection.current > 0) {
+        } else if (dy < -7 && currentSection.current > 0) {
           goTo(currentSection.current - 1)
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 5) goTo(currentSection.current + 1)
+        if (!isAnimating.current && currentSection.current < 8) goTo(currentSection.current + 1)
       },
       onUp: () => {
         if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
@@ -276,7 +388,7 @@ function App() {
       const key = e.key
       if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight'|| (key === ' ' && !e.shiftKey)) {
         e.preventDefault()
-        if (currentSection.current < 5) goTo(currentSection.current + 1)
+        if (currentSection.current < 8) goTo(currentSection.current + 1)
       } else if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' || (key === ' ' && e.shiftKey)) {
         e.preventDefault()
         if (currentSection.current > 0) goTo(currentSection.current - 1)
@@ -300,6 +412,7 @@ function App() {
         onHeroClick={() => goToRef.current?.(0)}
         onFounderClick={() => goToRef.current?.(1)}
         onWhoWeTrainClick={() => goToRef.current?.(4)}
+        onMeetTheTeamClick={() => goToRef.current?.(6)}
       />
 
       <RightOrnament ref={ornamentHandleRef} />
@@ -319,6 +432,12 @@ function App() {
       <WhoWeTrainSection ref={whoWeTrainRef} />
 
       <WhoWeTrainSecondSection ref={whoWeTrainSecondRef} />
+      
+      <MeetTheTeamSection ref={meetTheTeamRef} />
+
+      <MeetTheTeamSecondSection ref={meetTheTeamSecondRef} />
+
+      <OurCoachesSection ref={ourCoachesRef} />
 
       <ScaffoldOverlay />
 
