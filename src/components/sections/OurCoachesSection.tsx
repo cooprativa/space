@@ -1,4 +1,4 @@
-import { forwardRef, useState, useCallback } from 'react';
+import { forwardRef, useState, useCallback, useRef } from 'react';
 import Coach1 from '../../assets/images/coach-1.png';
 import Coach2 from '../../assets/images/coach-2.png';
 import Coach3 from '../../assets/images/coach-3.png';
@@ -13,11 +13,39 @@ const coaches = [
 
 const OurCoachesSection = forwardRef<HTMLDivElement>((_, ref) => {
   const [hoveredCoach, setHoveredCoach] = useState<string | null>(null);
+  const [isSwitching, setIsSwitching] = useState(false);
+  const lastCoachRef = useRef('');
+  const transitionTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     setCursorPos({ x: e.clientX, y: e.clientY });
   }, []);
+
+  const handleCoachEnter = (name: string) => {
+    if (transitionTimeout.current) clearTimeout(transitionTimeout.current);
+
+    if (hoveredCoach !== null) {
+      // Coach-to-coach: fast 0.15s exit via .switching, then enter with new name
+      setIsSwitching(true);
+      setHoveredCoach(null);
+      transitionTimeout.current = setTimeout(() => {
+        lastCoachRef.current = name;
+        setIsSwitching(false);
+        setHoveredCoach(name);
+      }, 150);
+    } else {
+      // Fresh entry: normal 0.6s enter
+      lastCoachRef.current = name;
+      setHoveredCoach(name);
+    }
+  };
+
+  const handleCoachLeave = () => {
+    if (transitionTimeout.current) clearTimeout(transitionTimeout.current);
+    setIsSwitching(false);
+    setHoveredCoach(null);
+  };
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +60,7 @@ const OurCoachesSection = forwardRef<HTMLDivElement>((_, ref) => {
       <div
         className="coaches"
         onMouseMove={handleMouseMove}
-        onMouseLeave={() => setHoveredCoach(null)}
+        onMouseLeave={handleCoachLeave}
       >
         {coaches.map((coach, i) => (
           <img
@@ -40,18 +68,16 @@ const OurCoachesSection = forwardRef<HTMLDivElement>((_, ref) => {
             className='faded-image'
             src={coach.src}
             alt={coach.name}
-            onMouseEnter={() => setHoveredCoach(coach.name)}
+            onMouseEnter={() => handleCoachEnter(coach.name)}
           />
         ))}
       </div>
-      {hoveredCoach && (
-        <div
-          className="coach-cursor-label"
-          style={{ left: cursorPos.x - 100, top: cursorPos.y + 20 }}
-        >
-          {hoveredCoach}
-        </div>
-      )}
+      <div
+        className={`coach-cursor-label${isSwitching ? ' switching' : ''}${hoveredCoach ? ' visible' : ''}`}
+        style={{ left: cursorPos.x - 100, top: cursorPos.y + 20 }}
+      >
+        {hoveredCoach ?? lastCoachRef.current}
+      </div>
     </section>
   );
 });
