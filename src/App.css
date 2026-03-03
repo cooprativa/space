@@ -829,6 +829,108 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   align-self: center;
 }
 
+.section.runner-separator {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 200;
+}
+
+.section.results-section {
+  background: linear-gradient(40deg, #344c54 0%, #3a7698 20%, #4A8BB1 30%, rgb(46, 91, 101) 50%, #1E3236 70%, #102429 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 220px 120px;
+  gap: 60px;
+}
+.results-section .heading-container {
+  z-index: 30; /* above all founder content and ornaments */
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.results-section .heading-container h4 {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 5.5rem;
+  color: #ACFC17;
+  text-align: center;
+  line-height: 70%;
+  text-transform: uppercase;
+}
+.results-section .heading-container span {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  line-height: 100%;
+  max-width: 40vw;
+  line-height: 120%;
+}
+.results-cards-container {
+  display: flex;
+  gap: 20px;
+}
+.results-cards-container .results-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: #00000033;
+  border-radius: 30px;
+  padding: 20px 30px;
+  flex: 1;
+  max-width: 400px;
+  gap: 20px;
+}
+.results-cards-container .results-card svg {
+  position: absolute;
+  top: -30px;
+  left: 50px;
+}
+.results-cards-container .results-card .card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.results-cards-container .results-card h5 {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 2.2rem;
+  color: #ACFC17;
+  text-align: left;
+  line-height: 100%;
+}
+.results-cards-container .results-card span {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: white;
+  text-align: left;
+  line-height: 120%;
+}
+.results-cards-container .results-card .card-body {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+}
+.results-cards-container .results-card .card-body p {
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  text-align: left;
+  line-height: 120%;
+}
+.results-cards-container .results-card .card-body .left-line {
+  width: 14px;
+  border-radius: 10px;
+  height: 95%;
+  background: #97B8FF;
+}
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   position: absolute;
@@ -1059,7 +1161,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   width: 100%;
   height: 50px;
   background: #ACFC17;
-  z-index: 1001;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
