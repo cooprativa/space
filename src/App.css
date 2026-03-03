@@ -840,7 +840,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   background: linear-gradient(40deg, #344c54 0%, #3a7698 20%, #4A8BB1 30%, rgb(46, 91, 101) 50%, #1E3236 70%, #102429 100%);
   display: flex;
   flex-direction: column;
-  padding: 220px 120px;
+  padding: 220px 0px 220px 120px;
   gap: 60px;
 }
 .results-section .heading-container {
@@ -870,24 +870,45 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 .results-cards-container {
   display: flex;
-  gap: 20px;
+  gap: 40px;
+  margin-top: 140px;
 }
 .results-cards-container .results-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  background: #00000033;
-  border-radius: 30px;
-  padding: 20px 30px;
   flex: 1;
   max-width: 400px;
-  gap: 20px;
+  max-height: 300px;
 }
-.results-cards-container .results-card svg {
+.results-card > div:nth-of-type(2) {
+   background: rgba(0,0,0,0.3);
+   backdrop-filter: blur(20px) saturate(130%);
+}
+.results-cards-container .results-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 20px 30px;
+}
+.results-card .glass {
+  padding: 0 !important;
+/*   background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(20px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(130%) !important; */
+  width: 100% !important;
+  overflow: visible !important;
+}
+.results-card .glass > div {
+  width: 100% !important;
+  z-index: none !important;
+}
+.results-card > svg {
   position: absolute;
-  top: -30px;
-  left: 50px;
+  top: -150px;
+  z-index: 100;
+  left: 30px;
 }
 .results-cards-container .results-card .card-header {
   display: flex;
@@ -925,10 +946,12 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   text-align: left;
   line-height: 120%;
 }
-.results-cards-container .results-card .card-body .left-line {
+.results-card-inner .card-body .left-line {
+  display: block;
   width: 14px;
   border-radius: 10px;
-  height: 95%;
+  height: 100px;
+  max-height: 100% !important;
   background: #97B8FF;
 }
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
