@@ -3,6 +3,7 @@ import Coach1 from '../../assets/images/coach-1.png';
 import Coach2 from '../../assets/images/coach-2.png';
 import Coach3 from '../../assets/images/coach-3.png';
 import Coach4 from '../../assets/images/coach-4.png';
+import GreenCircle from '../../assets/images/push-your-limits.png';
 
 const coaches = [
   { src: Coach1, name: 'Tiago Lemos' },
@@ -74,9 +75,10 @@ const OurCoachesSection = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
       <div
         className={`coach-cursor-label${isSwitching ? ' switching' : ''}${hoveredCoach ? ' visible' : ''}`}
-        style={{ left: cursorPos.x - 100, top: cursorPos.y + 20 }}
+        style={{ left: cursorPos.x - 100, top: cursorPos.y - 40 }}
       >
-        {hoveredCoach ?? lastCoachRef.current}
+        <img src={GreenCircle} alt="" />
+        <p>{hoveredCoach ?? lastCoachRef.current}</p>
       </div>
     </section>
   );
