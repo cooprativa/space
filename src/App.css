@@ -984,6 +984,51 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 .carousel-dot:focus, .carousel-dot.active:focus {
   outline: none;
 }
+
+.section.contacts-section {
+  background: linear-gradient(40deg, #143037 0%, #395863 15%, #366e8e 30%, #3c7190 50%, rgb(43, 94, 106) 70%, #1E3236 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 80px 120px;
+  gap: 40px;
+}
+.contacts-section .heading-container {
+  z-index: 30; /* above all founder content and ornaments */
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.contacts-section .heading-container h4 {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 5.5rem;
+  color: #ACFC17;
+  text-align: center;
+  line-height: 70%;
+  text-transform: uppercase;
+}
+.contacts-section .heading-container span {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  line-height: 100%;
+  max-width: 40vw;
+  line-height: 120%;
+}
+.contacts-section .heading-container p {
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+  text-align: start;
+  line-height: 120%;
+  max-width: 320px;
+  margin-top: 40px;
+}
+
+
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   position: absolute;
@@ -1526,3 +1571,146 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT FORM
+   ═══════════════════════════════════════════════════════ */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 580px;
+  z-index: 30;
+}
+
+.contact-form__row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+.contact-form__row--full { flex-direction: column; }
+.contact-form__row--half { flex-direction: row; }
+.contact-form__row--half .contact-form__field { flex: 1 1 0; min-width: 0; }
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 100%;
+}
+
+.contact-form__label {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+.contact-form__input__wrapper {
+  padding: 1.5px;
+  background: linear-gradient(-45deg, #ffffffbb, #a6a6a677, #a6a6a677, #ffffffbb);
+  border-radius: 20px;
+}
+.contact-form__input__wrapper.wrapper--error {
+  padding: 1.5px;
+  background: linear-gradient(-45deg, #ff5e5eff, #ff5e5e99, #ff5e5e99, #ff5e5eff);
+  border-radius: 20px;
+}
+
+.contact-form__input,
+.contact-form__textarea {
+  display: block;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #194057dd;
+  /* border: 1.5px solid rgba(255, 255, 255, 0.15); */
+  border-radius: 20px;
+  padding: 14px 20px;
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.contact-form__input::placeholder,
+.contact-form__textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.contact-form__textarea {
+  resize: none;
+  min-height: 110px;
+  line-height: 1.5;
+}
+
+.contact-form__input:focus,
+.contact-form__textarea:focus {
+  /* border-color: #97B8FF; */
+  background: #0e2839dd;
+  /* box-shadow: 0 0 0 3px rgba(172, 252, 23, 0.18); */
+}
+
+/* .contact-form__input--error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.20)
+  background: #633b3edd;
+  background: #5c5c5c;
+}
+.contact-form__input--error:focus {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.20);
+  background: #462527dd;
+  background: #554963;
+} */
+
+.contact-form__error {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ff8282;
+  /* color: #c3aae3; */
+  display: block;
+}
+.contact-form__success {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ACFC17;
+  margin-bottom: 4px;
+}
+
+.contact-form__submit {
+  appearance: none;
+  -webkit-appearance: none;
+  background: #1f4459;
+  color: #ACFC17;
+  border: 2px solid #ACFC17;
+  border-radius: 20px;
+  padding: 10px 20px;
+  width: 100%;
+  font-family: "Coolvetica", system-ui, sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  box-sizing: border-box;
+}
+.contact-form__submit:hover {
+  background: #ACFC17;
+  color: #0B2E42;
+  border: 2px solid #ACFC17;
+}
+.contact-form__submit:focus-visible {
+  outline: 2px solid #ACFC17;
+  outline-offset: 4px;
+  border-radius: 10px;
+}
+.contact-form__submit:active { transform: translateY(1px); }
+.contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
