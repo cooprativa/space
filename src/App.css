@@ -759,6 +759,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 .our-coaches img:hover {
   transform: scale(110%);
+  cursor: none;
 }
 .our-coaches .coaches img:nth-of-type(1) {
   width: 360px;
@@ -795,7 +796,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 .coaches-cta .heading-container {
   position: absolute;
-  top: 33%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -67%);
   z-index: 30; /* above all founder content and ornaments */
@@ -840,7 +841,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   background: linear-gradient(40deg, #344c54 0%, #3a7698 20%, #4A8BB1 30%, rgb(46, 91, 101) 50%, #1E3236 70%, #102429 100%);
   display: flex;
   flex-direction: column;
-  padding: 220px 0px 220px 120px;
+  padding: 220px 0 0 0;
   gap: 60px;
 }
 .results-section .heading-container {
@@ -848,6 +849,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   display: flex;
   flex-direction: column;
   align-items: start;
+  margin-left: 120px;
 }
 .results-section .heading-container h4 {
   font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -870,19 +872,20 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 .results-cards-container {
   clip-path: inset(-200px 0px -50px 0px);
-  margin-top: 140px;
+  margin-top: 20px;
 }
 .results-track {
   display: flex;
   gap: 40px;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 120px;
 }
 .results-cards-container .results-card {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 0 0 calc((100% - 80px) / 3);
-  min-height: 300px;
+  min-height: 200px;
 }
 .results-card > div:nth-of-type(2) {
    background: rgba(0,0,0,0.3);
@@ -910,7 +913,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 .results-card > svg {
   position: absolute;
-  top: -150px;
+  top: -50px;
   z-index: 100;
   left: 30px;
 }
@@ -963,21 +966,23 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 40px;
 }
 .carousel-dot {
-  width: 10px;
+  width: 20px;
   height: 10px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.35);
+  background: #97B8FF77;
   border: none;
   cursor: pointer;
   padding: 0;
   transition: width 0.4s ease, background 0.4s ease;
 }
 .carousel-dot.active {
-  width: 40px;
-  background: #ACFC17;
+  width: 80px;
+  background: #97B8FF;
+}
+.carousel-dot:focus, .carousel-dot.active:focus {
+  outline: none;
 }
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
@@ -1100,10 +1105,10 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:nth-of-type(odd):hover .flip-card-inner {
-  transform: rotate(-3deg) rotateY(170deg);
+  transform: rotate(-1deg) rotateY(170deg);
 }
 .flip-card:nth-of-type(even):hover .flip-card-inner {
-  transform: rotate(3deg) rotateY(-170deg);
+  transform: rotate(1deg) rotateY(-170deg);
 }
 
 /* Position the front and back side */
@@ -1488,7 +1493,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 .coach-cursor-label img {
   width: 80px;
-  animation: circle-rotate 10s linear infinite;
+  animation: circle-rotate 8s linear infinite;
 }
 @keyframes circle-rotate {
     0% {

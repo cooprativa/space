@@ -7,8 +7,8 @@ import GreenCircle from '../../assets/images/push-your-limits.png';
 
 const coaches = [
   { src: Coach1, name: 'Tiago Lemos' },
-  { src: Coach2, name: 'João Dias' },
-  { src: Coach3, name: 'Marco Santos' },
+  { src: Coach2, name: 'André Cruz' },
+  { src: Coach3, name: 'Mário Bonança' },
   { src: Coach4, name: 'Henrique Pereira' },
 ];
 

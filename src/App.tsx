@@ -157,7 +157,7 @@ function App() {
              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-             .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+             .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
              .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
@@ -188,7 +188,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: ornamentHandle?.computeLeftX() ?? 0 }, 0)
              // Show founder badge when entering founder section
@@ -219,7 +219,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
@@ -249,7 +249,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -279,7 +279,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -309,7 +309,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -339,7 +339,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -369,7 +369,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 0 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -399,7 +399,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 0 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: 100, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -429,7 +429,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 0 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 50, yPercent: 50, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 55, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -459,7 +459,7 @@ function App() {
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: -100 }, 0)
-              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: -80, duration: 1.2 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: -85, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
