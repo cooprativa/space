@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import ScaffoldOverlay from './components/ScaffoldOverlay'
 import RightOrnament, { type RightOrnamentHandle } from './components/RightOrnament'
 import ContactsRunner, { type ContactsRunnerHandle } from './components/ContactsRunner'
+import ChevronOrnaments, { type ChevronOrnamentsHandle } from './components/ChevronOrnaments'
 import HeroSection, { type HeroSectionHandle } from './components/sections/HeroSection'
 import FounderSection, { type FounderSectionHandle } from './components/sections/FounderSection'
 import AfterFounderSection from './components/sections/AfterFounderSection'
@@ -30,6 +31,7 @@ function App() {
   const heroHandleRef = useRef<HeroSectionHandle | null>(null)
   const ornamentHandleRef = useRef<RightOrnamentHandle | null>(null)
   const contactsRunnerHandleRef = useRef<ContactsRunnerHandle | null>(null)
+  const chevronOrnamentsHandleRef = useRef<ChevronOrnamentsHandle | null>(null)
   const founderHandleRef = useRef<FounderSectionHandle | null>(null)
   const afterFounderRef = useRef<HTMLDivElement | null>(null)
   const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
@@ -80,6 +82,10 @@ function App() {
     const topBannerEl = topBannerRef.current
     const afterFounderImgContainerEl = afterFounderImgContainerRef.current
     const contactsRunnerEl = contactsRunnerHandleRef.current?.contactsRunnerEl ?? null
+    const chevronA = chevronOrnamentsHandleRef.current?.chevronA ?? null
+    const chevronB = chevronOrnamentsHandleRef.current?.chevronB ?? null
+    const chevronC = chevronOrnamentsHandleRef.current?.chevronC ?? null
+    const chevronD = chevronOrnamentsHandleRef.current?.chevronD ?? null
 
     if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !whoWeTrainSecondEl || !meetTheTeamEl || !ourCoachesEl || !coachesCTAEl || !runnerSeparatorEl || !resultsEl || !footerEl) return
 
@@ -108,6 +114,12 @@ function App() {
     }
 
     if (contactsRunnerEl) gsap.set(contactsRunnerEl, { autoAlpha: 0 })
+
+    // Chevrons: all off-screen, invisible. xPercent/yPercent for centering (avoid CSS transform conflict)
+    if (chevronA) gsap.set(chevronA, { autoAlpha: 0, xPercent: -50, yPercent: -50, x: '60vw' })
+    if (chevronB) gsap.set(chevronB, { autoAlpha: 0, xPercent: -50, yPercent: -50, x: '-60vw', scaleX: -1 })
+    if (chevronC) gsap.set(chevronC, { autoAlpha: 0, xPercent: -50, yPercent: -50, x: '60vw' })
+    if (chevronD) gsap.set(chevronD, { autoAlpha: 0, xPercent: -50, yPercent: -50, x: '60vw' })
 
     // Top banner hidden outside the top of the screen by default — shown only on sections 7, 8, 9
     if (topBannerEl) {
@@ -146,6 +158,10 @@ function App() {
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       if (topBannerEl) tweenTargets.push(topBannerEl)
       if (contactsRunnerEl) tweenTargets.push(contactsRunnerEl)
+      if (chevronA) tweenTargets.push(chevronA)
+      if (chevronB) tweenTargets.push(chevronB)
+      if (chevronC) tweenTargets.push(chevronC)
+      if (chevronD) tweenTargets.push(chevronD)
       gsap.killTweensOf(tweenTargets)
 
       setAfterFounderActive(index === 2)  /* Detect start of transition into AfterFounder section -> To trigger CountUp start animation */
@@ -192,6 +208,11 @@ function App() {
                { fill: '#ACFC17', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons: all off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 1: {
@@ -227,6 +248,11 @@ function App() {
                { fill: '#ACFC17', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons: all off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
            break
         }
         case 2: {
@@ -260,6 +286,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons: all off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 3: {
@@ -293,6 +324,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons: all off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 4: {
@@ -326,6 +362,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons: all off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 5: {
@@ -359,6 +400,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons: all off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 6: {
@@ -392,6 +438,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevron A enters from right
+          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '40vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 7: {
@@ -425,6 +476,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevron A moves inward, chevron B enters from left with delay
+          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '20vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 1, x: '-40vw' }, 0.15)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 8: {
@@ -458,6 +514,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons hold symmetric positions
+          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '20vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 1, x: '-20vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 9: {
@@ -491,6 +552,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons cross/swap positions
+          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '-20vw', ease: 'power2.inOut' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 1, x: '20vw', ease: 'power2.inOut' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 10: {
@@ -524,6 +590,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons exit off-screen
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw', ease: 'power2.in' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw', ease: 'power2.in' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw' }, 0)
           break
         }
         case 11: {
@@ -557,6 +628,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons A/B off, C/D enter from right
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '12vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '8vw' }, 0.08)
           break
         }
         case 12: {
@@ -590,6 +666,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons C/D hold position
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '12vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '8vw' }, 0)
           break
         }
         case 13: {
@@ -623,6 +704,11 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
+          // Chevrons C/D hold position
+          if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw' }, 0)
+          if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '12vw' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '8vw' }, 0)
           break
         }
       }
@@ -698,6 +784,8 @@ function App() {
       <RightOrnament ref={ornamentHandleRef} />
 
       <ContactsRunner ref={contactsRunnerHandleRef} />
+
+      <ChevronOrnaments ref={chevronOrnamentsHandleRef} />
 
       <HeroSection ref={heroHandleRef} />
 
