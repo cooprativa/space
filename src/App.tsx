@@ -146,6 +146,8 @@ function App() {
 
       setAfterFounderActive(index === 2)  /* Detect start of transition into AfterFounder section -> To trigger CountUp start animation */
 
+      if (index === 11) contactsRunnerHandleRef.current?.playEntrance()
+        
       const tl = gsap.timeline({
         defaults: { duration: 0.9, ease: 'power2.out' },
         onComplete: () => {
@@ -529,7 +531,6 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: -100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 0 }, 0)
               .to(contactsEl, { autoAlpha: 1, yPercent: 0 }, 0)
-              .to(contactsRunnerEl ?? {}, { autoAlpha: 1 }, 0)
               .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
@@ -540,7 +541,6 @@ function App() {
                { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
                0
              )
-          tl.call(() => { contactsRunnerHandleRef.current?.playEntrance() })
           break
         }
         case 12: {
@@ -562,8 +562,8 @@ function App() {
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: -100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 0 }, 0)
-              .to(contactsEl, { autoAlpha: 1, yPercent: -50 }, 0)
-              .to(footerEl, { autoAlpha: 1, yPercent: 50 }, 0)
+              .to(contactsEl, { autoAlpha: 1, yPercent: -60 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 40 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
