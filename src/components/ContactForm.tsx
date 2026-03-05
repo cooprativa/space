@@ -86,7 +86,7 @@ const ContactForm = () => {
           {/* <label className="contact-form__label" htmlFor="cf-message">Message</label> */}
           {errors.message && <span className="contact-form__error" role="alert">{errors.message.message}</span>}
           <div className={`contact-form__input__wrapper${errors.message ? ' wrapper--error' : ''}`}>
-            <textarea id="cf-message" rows={4} placeholder="subject"
+            <textarea id="cf-message" rows={2} placeholder="subject"
               className={`contact-form__textarea${errors.message ? ' contact-form__input--error' : ''}`}
               {...fieldProps('message')} />
           </div>
@@ -107,7 +107,7 @@ const ContactForm = () => {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          {isSubmitting ? 'Sending…' : hovered ? "Let's Train" : 'Start Training'}
+          {isSubmitting ? 'Sending…' : hovered ? "Let's Train" : 'Submit'}
         </button>
       </div>
     </form>

@@ -2,7 +2,7 @@ import { forwardRef, useRef, useState, useEffect, useCallback } from 'react';
 import ResultsCard from '../ResultsCard';
 
 const TOTAL_POSITIONS = 3;
-const AUTO_ADVANCE_MS = 10_000;
+const AUTO_ADVANCE_MS = 5_000;
 const GAP = 40;
 const VISIBLE_CARDS = 3;
 

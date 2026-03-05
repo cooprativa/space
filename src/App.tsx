@@ -6,6 +6,7 @@ import { Observer } from 'gsap/dist/Observer'
 import Navbar from './components/Navbar'
 import ScaffoldOverlay from './components/ScaffoldOverlay'
 import RightOrnament, { type RightOrnamentHandle } from './components/RightOrnament'
+import ContactsRunner, { type ContactsRunnerHandle } from './components/ContactsRunner'
 import HeroSection, { type HeroSectionHandle } from './components/sections/HeroSection'
 import FounderSection, { type FounderSectionHandle } from './components/sections/FounderSection'
 import AfterFounderSection from './components/sections/AfterFounderSection'
@@ -19,6 +20,7 @@ import CoachesCTASection from './components/sections/CoachesCTASection'
 import RunnerSeparatorSection from './components/sections/RunnerSeparatorSection'
 import ResultsSection from './components/sections/ResultsSection'
 import ContactsSection from './components/sections/ContactsSection'
+import FooterSection from './components/sections/FooterSection'
 
 // Registrar plugins
 gsap.registerPlugin(Observer)
@@ -26,6 +28,7 @@ gsap.registerPlugin(Observer)
 function App() {
   const heroHandleRef = useRef<HeroSectionHandle | null>(null)
   const ornamentHandleRef = useRef<RightOrnamentHandle | null>(null)
+  const contactsRunnerHandleRef = useRef<ContactsRunnerHandle | null>(null)
   const founderHandleRef = useRef<FounderSectionHandle | null>(null)
   const afterFounderRef = useRef<HTMLDivElement | null>(null)
   const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
@@ -38,6 +41,7 @@ function App() {
   const runnerSeparatorRef = useRef<HTMLDivElement | null>(null)
   const resultsRef = useRef<HTMLDivElement | null>(null)
   const contactsRef = useRef<HTMLDivElement | null>(null)
+  const footerRef = useRef<HTMLDivElement | null>(null)
   const topBannerRef = useRef<HTMLDivElement | null>(null)
 
   const afterFounderImgContainerRef = useRef<HTMLDivElement | null>(null)
@@ -69,10 +73,12 @@ function App() {
     const runnerSeparatorEl = runnerSeparatorRef.current
     const resultsEl = resultsRef.current
     const contactsEl = contactsRef.current
+    const footerEl = footerRef.current
     const topBannerEl = topBannerRef.current
     const afterFounderImgContainerEl = afterFounderImgContainerRef.current
+    const contactsRunnerEl = contactsRunnerHandleRef.current?.contactsRunnerEl ?? null
 
-    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !whoWeTrainSecondEl || !meetTheTeamEl || !ourCoachesEl || !coachesCTAEl || !runnerSeparatorEl || !resultsEl || !contactsEl) return
+    if (!heroEl || !ornamentEl || !founderEl || !afterFounderEl || !beforeWhoWeTrainEl || !whoWeTrainEl || !whoWeTrainSecondEl || !meetTheTeamEl || !ourCoachesEl || !coachesCTAEl || !runnerSeparatorEl || !resultsEl || !footerEl) return
 
     // Estados iniciais (apenas hero visível)
     gsap.set(heroEl, { autoAlpha: 1 })
@@ -87,7 +93,7 @@ function App() {
     gsap.set(coachesCTAEl, { autoAlpha: 1, yPercent: 100 })
     gsap.set(runnerSeparatorEl, { autoAlpha: 1, yPercent: 100 })
     gsap.set(resultsEl, { autoAlpha: 1, yPercent: 100 })
-    gsap.set(contactsEl, { autoAlpha: 0, yPercent: 100 })
+    gsap.set(footerEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(heroImgContainerEl, { autoAlpha: 1 })
     gsap.set(founderImgContainerEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(estDateContainerEl, { autoAlpha: 0, xPercent: 100 })
@@ -97,6 +103,8 @@ function App() {
     if (founderBadgeEl) {
       gsap.set(founderBadgeEl, { autoAlpha: 0 })
     }
+
+    if (contactsRunnerEl) gsap.set(contactsRunnerEl, { autoAlpha: 0 })
 
     // Top banner hidden by default — shown only on sections 6, 7, 8
     if (topBannerEl) {
@@ -129,9 +137,11 @@ function App() {
         runnerSeparatorEl,
         resultsEl,
         contactsEl,
+        footerEl
       ]
       if (founderBadgeEl) tweenTargets.push(founderBadgeEl)
       if (topBannerEl) tweenTargets.push(topBannerEl)
+      if (contactsRunnerEl) tweenTargets.push(contactsRunnerEl)
       gsap.killTweensOf(tweenTargets)
 
       setAfterFounderActive(index === 2)  /* Detect start of transition into AfterFounder section -> To trigger CountUp start animation */
@@ -165,6 +175,7 @@ function App() {
              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
              .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+             .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -197,6 +208,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: ornamentHandle?.computeLeftX() ?? 0 }, 0)
              // Show founder badge when entering founder section
              .to(founderBadgeEl, { autoAlpha: 1, duration: 0.5 }, 0.4)
@@ -229,6 +241,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 0 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -260,6 +273,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -291,6 +305,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -322,6 +337,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -353,6 +369,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -384,6 +401,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -415,6 +433,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -446,6 +465,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 55, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -477,6 +497,7 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: -85, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 0 }, 0)
               .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -508,6 +529,41 @@ function App() {
               .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: -100, duration: 1.2 }, 0)
               .to(resultsEl, { autoAlpha: 1, yPercent: 0 }, 0)
               .to(contactsEl, { autoAlpha: 1, yPercent: 0 }, 0)
+              .to(contactsRunnerEl ?? {}, { autoAlpha: 1 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          tl.call(() => { contactsRunnerHandleRef.current?.playEntrance() })
+          break
+        }
+        case 12: {
+          // CONTACTS -> FOOTER
+           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             .to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(coachesCTAEl, { autoAlpha: 1, yPercent: -100 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 0, yPercent: -100, duration: 1.2 }, 0)
+              .to(resultsEl, { autoAlpha: 1, yPercent: 0 }, 0)
+              .to(contactsEl, { autoAlpha: 1, yPercent: -50 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 50 }, 0)
              .to(ornamentEl, { x: 800 }, 0)
              // Hide founder badge when leaving founder section
              .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
@@ -520,6 +576,9 @@ function App() {
           break
         }
       }
+
+      // ContactsRunner: hide on all sections except 11, show on 11 (entrance handled via playEntrance)
+      if (index !== 11 && contactsRunnerEl) tl.to(contactsRunnerEl, { autoAlpha: 0 }, 0)
     }
 
     // Expose goTo for Navbar callbacks
@@ -535,14 +594,14 @@ function App() {
       onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
-        if (dy > 7 && currentSection.current < 11) {
+        if (dy > 7 && currentSection.current < 12) {
           goTo(currentSection.current + 1)
         } else if (dy < -7 && currentSection.current > 0) {
           goTo(currentSection.current - 1)
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 11) goTo(currentSection.current + 1)
+        if (!isAnimating.current && currentSection.current < 12) goTo(currentSection.current + 1)
       },
       onUp: () => {
         if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
@@ -554,7 +613,7 @@ function App() {
       const key = e.key
       if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight'|| (key === ' ' && !e.shiftKey)) {
         e.preventDefault()
-        if (currentSection.current < 11) goTo(currentSection.current + 1)
+        if (currentSection.current < 12) goTo(currentSection.current + 1)
       } else if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' || (key === ' ' && e.shiftKey)) {
         e.preventDefault()
         if (currentSection.current > 0) goTo(currentSection.current - 1)
@@ -588,6 +647,8 @@ function App() {
 
       <RightOrnament ref={ornamentHandleRef} />
 
+      <ContactsRunner ref={contactsRunnerHandleRef} />
+
       <HeroSection ref={heroHandleRef} />
 
       <FounderSection ref={founderHandleRef} />
@@ -617,6 +678,8 @@ function App() {
       <ResultsSection ref={resultsRef} />
 
       <ContactsSection ref={contactsRef} />
+
+      <FooterSection ref={footerRef} />
 
       <ScaffoldOverlay />
 
