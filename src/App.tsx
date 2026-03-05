@@ -13,6 +13,7 @@ import AfterFounderSection from './components/sections/AfterFounderSection'
 import BeforeWhoWeTrainSection from './components/sections/BeforeWhoWeTrainSection'
 import WhoWeTrainSection from './components/sections/WhoWeTrainSection'
 import WhoWeTrainSecondSection from './components/sections/WhoWeTrainSecondSection'
+import WhoWeTrainThirdSection from './components/sections/WhoWeTrainThirdSection'
 import MeetTheTeamSection from './components/sections/MeetTheTeamSection'
 import MeetTheTeamSecondSection from './components/sections/MeetTheTeamSecondSection'
 import OurCoachesSection from './components/sections/OurCoachesSection'
@@ -34,6 +35,7 @@ function App() {
   const beforeWhoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const whoWeTrainRef = useRef<HTMLDivElement | null>(null)
   const whoWeTrainSecondRef = useRef<HTMLDivElement | null>(null)
+  const whoWeTrainThirdRef = useRef<HTMLDivElement | null>(null)
   const meetTheTeamRef = useRef<HTMLDivElement | null>(null)
   const meetTheTeamSecondRef = useRef<HTMLDivElement | null>(null)
   const ourCoachesRef = useRef<HTMLDivElement | null>(null)
@@ -66,6 +68,7 @@ function App() {
     const beforeWhoWeTrainEl = beforeWhoWeTrainRef.current
     const whoWeTrainEl = whoWeTrainRef.current
     const whoWeTrainSecondEl = whoWeTrainSecondRef.current
+    const whoWeTrainThirdEl = whoWeTrainThirdRef.current
     const meetTheTeamEl = meetTheTeamRef.current
     const meetTheTeamSecondEl = meetTheTeamSecondRef.current
     const ourCoachesEl = ourCoachesRef.current
@@ -86,7 +89,7 @@ function App() {
     gsap.set(afterFounderEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 })
-    gsap.set(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 })
+    gsap.set(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 })
     gsap.set(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 })
     gsap.set(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 })
     gsap.set(ourCoachesEl, { autoAlpha: 1, yPercent: 100 })
@@ -106,9 +109,9 @@ function App() {
 
     if (contactsRunnerEl) gsap.set(contactsRunnerEl, { autoAlpha: 0 })
 
-    // Top banner hidden by default — shown only on sections 6, 7, 8
+    // Top banner hidden outside the top of the screen by default — shown only on sections 7, 8, 9
     if (topBannerEl) {
-      gsap.set(topBannerEl, { autoAlpha: 0 })
+      gsap.set(topBannerEl, { autoAlpha: 1, yPercent: -100 })
     }
 
     const goTo = (index: number) => {
@@ -130,6 +133,7 @@ function App() {
         beforeWhoWeTrainEl,
         whoWeTrainEl,
         whoWeTrainSecondEl,
+        whoWeTrainThirdEl,
         meetTheTeamEl,
         meetTheTeamSecondEl,
         ourCoachesEl,
@@ -146,8 +150,8 @@ function App() {
 
       setAfterFounderActive(index === 2)  /* Detect start of transition into AfterFounder section -> To trigger CountUp start animation */
 
-      if (index === 11) contactsRunnerHandleRef.current?.playEntrance()
-        
+      if (index === 12) contactsRunnerHandleRef.current?.playEntrance()
+
       const tl = gsap.timeline({
         defaults: { duration: 0.9, ease: 'power2.out' },
         onComplete: () => {
@@ -159,7 +163,7 @@ function App() {
       switch (index) {
         case 0: {
            // Voltar ao HERO
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 1 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(founderEl, { autoAlpha: 0, xPercent: 100 }, 0)
@@ -170,6 +174,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
              .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -191,7 +196,7 @@ function App() {
         }
         case 1: {
           // HERO -> FOUNDER or AFTER-FOUNDER -> FOUNDER
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 1, xPercent: 0 }, 0)
@@ -203,6 +208,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -225,7 +231,7 @@ function App() {
         }
         case 2: {
           // FOUNDER -> AFTER-FOUNDER
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -236,6 +242,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, yPercent: 100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -257,7 +264,7 @@ function App() {
         }
         case 3: {
           // AFTER-FOUNDER -> BEFORE WHO WE TRAIN
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -268,6 +275,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 1, yPercent: 0 }, 0)
              .to(whoWeTrainEl, { autoAlpha: .4, yPercent: 50 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -289,7 +297,7 @@ function App() {
         }
         case 4: {
           // BEFORE WHO WE TRAIN -> WHO WE TRAIN
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -299,7 +307,8 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 1, xPercent: 0, yPercent: 0 }, 0)
-             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0.2, xPercent: 90 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -321,7 +330,7 @@ function App() {
         }
         case 5: {
           // WHO WE TRAIN -> WHO WE TRAIN SECOND
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -330,8 +339,9 @@ function App() {
              .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
-             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0.2, xPercent: -90 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0.2, xPercent: 80 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 0, yPercent: 100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -352,8 +362,8 @@ function App() {
           break
         }
         case 6: {
-          // WHO WE TRAIN SECOND -> MEET THE TEAM
-           tl.to(topBannerEl, { autoAlpha: 1, duration: 0.3 }, 0)
+          // WHO WE TRAIN SECOND -> WHO WE TRAIN THIRD
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -363,8 +373,9 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
-             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
-              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: 0 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
               .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -384,8 +395,8 @@ function App() {
           break
         }
         case 7: {
-          // MEET THE TEAM -> MEET THE TEAM SECOND
-           tl.to(topBannerEl, { autoAlpha: 1, duration: 0.3 }, 0)
+          // WHO WE TRAIN THIRD -> MEET THE TEAM
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: 0, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -395,7 +406,41 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
-             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 1, xPercent: 0 }, 0)
+              .to(meetTheTeamEl, { autoAlpha: 1, yPercent: 0 }, 0)
+              .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(coachesCTAEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(runnerSeparatorEl, { autoAlpha: 100, yPercent: 100, duration: 1.2 }, 0)
+              .to(resultsEl, { autoAlpha: 1, yPercent: 100 }, 0)
+              .to(contactsEl, { autoAlpha: 0, yPercent: 100 }, 0)
+              .to(footerEl, { autoAlpha: 1, yPercent: 100 }, 0)
+             .to(ornamentEl, { x: 800 }, 0)
+             // Hide founder badge when leaving founder section
+             .to(founderBadgeEl, { autoAlpha: 0, duration: 0.3 }, 0)
+             // Change ornament color to the requested purple when entering after-founder
+             .to(
+               ornamentEl.querySelectorAll('svg path'),
+               { fill: '#bd97ec', duration: 0.6, ease: 'power2.out' },
+               0
+             )
+          break
+        }
+        case 8: {
+          // MEET THE TEAM -> MEET THE TEAM SECOND
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: 0, duration: 0.1 }, 0)
+             .to(heroEl, { autoAlpha: 0 }, 0)
+             .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(founderEl, { autoAlpha: 0 }, 0)
+             .to(founderImgContainerEl, { autoAlpha: 0 }, 0)
+             .to(estDateContainerEl, { autoAlpha: 0 }, 0)
+             .to(afterFounderEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
+             .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
+             .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: -100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: 0 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 100 }, 0)
@@ -415,9 +460,9 @@ function App() {
              )
           break
         }
-        case 8: {
+        case 9: {
           // MEET THE TEAM SECOND -> OUR COACHES
-           tl.to(topBannerEl, { autoAlpha: 1, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: 0, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -427,7 +472,8 @@ function App() {
              .to(afterFounderImgContainerEl, { autoAlpha: 0, xPercent: 0 }, 0)
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
-             .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainSecondEl, { autoAlpha: 0, xPercent: -100 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: 0 }, 0)
@@ -447,9 +493,9 @@ function App() {
              )
           break
         }
-        case 9: {
+        case 10: {
           // OUR COACHES -> COACHES CTA
-           tl.to(topBannerEl, { autoAlpha: 1, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -460,6 +506,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
@@ -479,9 +526,9 @@ function App() {
              )
           break
         }
-        case 10: {
+        case 11: {
           // COACHES CTA -> RESULTS
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -492,6 +539,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
@@ -511,9 +559,9 @@ function App() {
              )
           break
         }
-        case 11: {
+        case 12: {
           // RESULTS -> CONTACTS
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -524,6 +572,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
@@ -543,9 +592,9 @@ function App() {
              )
           break
         }
-        case 12: {
+        case 13: {
           // CONTACTS -> FOOTER
-           tl.to(topBannerEl, { autoAlpha: 0, duration: 0.3 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -556,6 +605,7 @@ function App() {
              .to(beforeWhoWeTrainEl, { autoAlpha: 0, yPercent: -50 }, 0)
              .to(whoWeTrainEl, { autoAlpha: 0, xPercent: -100 }, 0)
              .to(whoWeTrainSecondEl, { autoAlpha: 1, xPercent: 0 }, 0)
+             .to(whoWeTrainThirdEl, { autoAlpha: 0, xPercent: 100 }, 0)
               .to(meetTheTeamEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(meetTheTeamSecondEl, { autoAlpha: 1, yPercent: -100 }, 0)
               .to(ourCoachesEl, { autoAlpha: 1, yPercent: -100 }, 0)
@@ -577,8 +627,8 @@ function App() {
         }
       }
 
-      // ContactsRunner: hide on all sections except 11, show on 11 (entrance handled via playEntrance)
-      if (index !== 11 && contactsRunnerEl) tl.to(contactsRunnerEl, { autoAlpha: 0 }, 0)
+      // ContactsRunner: hide on all sections except 12, show on 12 (entrance handled via playEntrance)
+      if (index !== 12 && contactsRunnerEl) tl.to(contactsRunnerEl, { autoAlpha: 0 }, 0)
     }
 
     // Expose goTo for Navbar callbacks
@@ -594,14 +644,14 @@ function App() {
       onChangeY: (self: { deltaY: number }) => {
         if (isAnimating.current) return
         const dy = self.deltaY || 0
-        if (dy > 7 && currentSection.current < 12) {
+        if (dy > 7 && currentSection.current < 13) {
           goTo(currentSection.current + 1)
         } else if (dy < -7 && currentSection.current > 0) {
           goTo(currentSection.current - 1)
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 12) goTo(currentSection.current + 1)
+        if (!isAnimating.current && currentSection.current < 13) goTo(currentSection.current + 1)
       },
       onUp: () => {
         if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
@@ -613,7 +663,7 @@ function App() {
       const key = e.key
       if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight'|| (key === ' ' && !e.shiftKey)) {
         e.preventDefault()
-        if (currentSection.current < 12) goTo(currentSection.current + 1)
+        if (currentSection.current < 13) goTo(currentSection.current + 1)
       } else if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' || (key === ' ' && e.shiftKey)) {
         e.preventDefault()
         if (currentSection.current > 0) goTo(currentSection.current - 1)
@@ -641,8 +691,8 @@ function App() {
         onHeroClick={() => goToRef.current?.(0)}
         onFounderClick={() => goToRef.current?.(1)}
         onWhoWeTrainClick={() => goToRef.current?.(4)}
-        onMeetTheTeamClick={() => goToRef.current?.(6)}
-        onContactsClick={() => goToRef.current?.(11)}
+        onMeetTheTeamClick={() => goToRef.current?.(7)}
+        onContactsClick={() => goToRef.current?.(12)}
       />
 
       <RightOrnament ref={ornamentHandleRef} />
@@ -664,6 +714,8 @@ function App() {
       <WhoWeTrainSection ref={whoWeTrainRef} />
 
       <WhoWeTrainSecondSection ref={whoWeTrainSecondRef} />
+
+      <WhoWeTrainThirdSection ref={whoWeTrainThirdRef} />
       
       <MeetTheTeamSection ref={meetTheTeamRef} />
 

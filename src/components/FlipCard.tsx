@@ -30,6 +30,7 @@ export default function FlipCard({
               <h3>{sportName}</h3>
             </>
           )}
+          <img className="svg-front" src={svgFront} alt="" />
         </div>
         <div className="flip-card-back">
           {frontLayout === 'h3-first' ? (
@@ -44,7 +45,6 @@ export default function FlipCard({
             </>
           )}
         </div>
-        <img className="svg-front" src={svgFront} alt="" />
       </div>
     </div>
   );

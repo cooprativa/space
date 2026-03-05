@@ -1160,7 +1160,6 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 
 .footer-section .footer-credits {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1179,93 +1178,134 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   padding: 10px;
   transform: scale(120%); /* scale up based on viewport width, with a base of 110% at 1450px */
 }
-
+.profile-cta-card {
+  position: absolute;
+  background-color: transparent;
+  height: fit-content;
+  padding: 15px 30px;
+  transform: scale(120%); /* scale up based on viewport width, with a base of 110% at 1450px */
+  top: 20vh;
+  left: 60vw;
+  width: 400px;
+  height: 600px;
+}
+.profile-cta-card .cta-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  z-index: 20;
+} 
+.cta-card-container h3 {
+  font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #ACFC17;
+  width: fit-content;
+  text-align: center;
+  line-height: 100%;
+}
+.cta-card-container p {
+  margin: 40px;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: white;
+  line-height: 120%;
+}
+.cta-card-container img {
+  width: 100%;
+  height: fit-content;
+  filter: contrast(110%);
+}
+.profile-cta-card > img {
+  position: absolute;
+  z-index: 10;
+  opacity: 1;
+  top: 0px;
+  right: 0px;
+  width: 380px;
+}
+.cta-card-container button {
+  width: fit-content !important;
+  align-self: center !important;
+  margin-top: -20px !important;
+}
 .flip-card.profile-card-cycling {
-  top: 48vh;
+  top: 46vh;
   left: 40vw;
   width: 380px;
   height: 300px;
 }
 .flip-card.profile-card-swimmers {
-  top: 30vh;
+  top: 25vh;
   left: 72vw;
   width: 300px;
   height: 460px;
 }
 .flip-card.profile-card-triathlon {
-  top: 7vh;
-  left: 10vw;
+  top: 8vh;
+  left: 32vw;
   width: 400px;
   height: 300px;
 }
 .flip-card.profile-card-athletics {
-  top: 53vh;
-  left: 5vw;
+  top: 52vh;
+  left: 8vw;
   width: 400px;
   height: 320px;
 }
 .flip-card.profile-card-drivers {
-  top: 25vh;
-  left: 45vw;
+  top: 30vh;
+  left: 67vw;
   width: 320px;
-  height: 360px;
+  height: 400px;
 }
 .flip-card.profile-card-team {
-  top: 38vh;
-  left: 72vw;
+  top: 24vh;
+  left: 18vw;
   width: 300px;
-  height: 422px;
+  height: 440px;
 }
 
-.flip-card .flip-card-inner > img {
+.flip-card .flip-card-front > .svg-front {
   position: absolute;
   z-index: 10;
 }
-.flip-card.profile-card-cycling .flip-card-inner > .svg-front {
+.flip-card.profile-card-cycling .flip-card-front > .svg-front {
   opacity: 1;
-  bottom: 25px;
+  left: 0px;
+  bottom: 48px;
   width: 220px;
 }
-.flip-card.profile-card-swimmers .flip-card-inner > .svg-front {
+.flip-card.profile-card-swimmers .flip-card-front > .svg-front {
   opacity: 1;
+  left: 0px;
   top: 48px;
   width: 70px;
 }
-.flip-card.profile-card-triathlon .flip-card-inner > .svg-front {
+.flip-card.profile-card-triathlon .flip-card-front > .svg-front {
   opacity: 1;
   top: 48px;
   right: 0px;
   width: 160px;
 }
-.flip-card.profile-card-athletics .flip-card-inner > .svg-front {
+.flip-card.profile-card-athletics .flip-card-front > .svg-front {
   opacity: 1;
-  bottom: 32px;
+  bottom: 48px;
   right: 0px;
   width: 160px;
 }
-.flip-card.profile-card-drivers .flip-card-inner > .svg-front {
+.flip-card.profile-card-drivers .flip-card-front > .svg-front {
   opacity: 1;
   top: 0px;
   left: 0px;
   width: 150px;
 }
-.flip-card.profile-card-team .flip-card-inner > .svg-front {
+.flip-card.profile-card-team .flip-card-front > .svg-front {
   opacity: 1;
-  bottom: 0px;
+  bottom: 48px;
   left: 0px;
   width: 75px;
-}
-.flip-card.profile-card-cycling:hover .svg-front {
-  opacity: 0;
-  transition: opacity .5s ease-in-out;
-}
-.flip-card.profile-card-swimmers:hover .svg-front {
-  opacity: 0;
-  transition: opacity .5s ease-in-out;
-}
-.flip-card.profile-card-triathlon:hover .svg-front {
-  opacity: 0;
-  transition: opacity .5s ease-in-out;
 }
 /* .flip-card.profile-card-cycling .flip-card-inner > .svg-back {
   opacity: 0;
@@ -1290,10 +1330,10 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:nth-of-type(odd):hover .flip-card-inner {
-  transform: /* rotate(-2deg) */ rotateY(160deg);
+  transform: /* rotate(-2deg) */ rotateY(-160deg);
 }
 .flip-card:nth-of-type(even):hover .flip-card-inner {
-  transform: /* rotate(2deg) */ rotateY(-160deg);
+  transform: /* rotate(2deg) */ rotateY(160deg);
 }
 
 /* Position the front and back side */
@@ -1312,6 +1352,15 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   align-items: flex-end;
   color: black;
   padding: 20px;
+  overflow: hidden;
+}
+
+.flip-card-front img:not(.svg-front) {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 .flip-card.flip-card.profile-card-triathlon .flip-card-front {
   align-items: flex-start;
@@ -1320,17 +1369,17 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   align-items: flex-start;
 }
 
-.flip-card.flip-card.profile-card-drivers .flip-card-front img {
+.flip-card.flip-card.profile-card-drivers .flip-card-front img:not(.svg-front) {
   width: 300px;
 }
-.flip-card.flip-card.profile-card-team .flip-card-front img {
+.flip-card.flip-card.profile-card-team .flip-card-front img:not(.svg-front) {
   width: 240px;
 }
 
 .flip-card-front h3 {
   font-size: 2rem;
   font-family: "Coolvetica", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #BD97EC;
+  color: #ACFC17;
 }
 .flip-card.profile-card-cycling .flip-card-front h3 {
   transform: translateY(-5px);
@@ -1859,7 +1908,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 /* ─── CONTACTS RUNNER ─────────────────────────────── */
 .contacts-runner {
   position: fixed;
-  bottom: 0;
+  bottom: 5vh;
   right: 0;
   pointer-events: none;
   z-index: 20;
