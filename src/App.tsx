@@ -55,6 +55,7 @@ function App() {
 
   const currentSection = useRef(0)
   const isAnimating = useRef(false)
+  const introComplete = useRef(false)
 
   const [afterFounderActive, setAfterFounderActive] = useState(false)
 
@@ -439,7 +440,7 @@ function App() {
                0
              )
           // Chevron A enters from right
-          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '50vw', y: '0vh' }, 0)
+          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '50vw', y: '0vh' }, 0.3)
           if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '-60vw', y: '35vh' }, 0)
           if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw', y: '0vh' }, 0)
           if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw', y: '0vh' }, 0)
@@ -515,7 +516,7 @@ function App() {
                0
              )
           // Chevrons hold symmetric positions
-          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '35vw', y: '-65vh' }, 0)
+          if (chevronA) tl.to(chevronA, { autoAlpha: 1, x: '35vw', y: '-70vh' }, 0)
           if (chevronB) tl.to(chevronB, { autoAlpha: 1, x: '-30vw', y: '-15vh' }, 0)
           if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw', y: '0vh' }, 0)
           if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw', y: '0vh' }, 0)
@@ -631,8 +632,8 @@ function App() {
           // Chevrons A/B off, C/D enter from right
           if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw', y: '10vh' }, 0)
           if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw', y: '10vh' }, 0)
-          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '45vw', y: '-60vh' }, 0)
-          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '20vw', y: '-60vh' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '40vw', y: '-70vh' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '15vw', y: '-70vh' }, 0)
           break
         }
         case 12: {
@@ -728,7 +729,7 @@ function App() {
       tolerance: 6,
       preventDefault: true,
       onChangeY: (self: { deltaY: number }) => {
-        if (isAnimating.current) return
+        if (!introComplete.current || isAnimating.current) return
         const dy = self.deltaY || 0
         if (dy > 7 && currentSection.current < 13) {
           goTo(currentSection.current + 1)
@@ -737,15 +738,17 @@ function App() {
         }
       },
       onDown: () => {
-        if (!isAnimating.current && currentSection.current < 13) goTo(currentSection.current + 1)
+        if (!introComplete.current || isAnimating.current || currentSection.current >= 13) return
+        goTo(currentSection.current + 1)
       },
       onUp: () => {
-        if (!isAnimating.current && currentSection.current > 0) goTo(currentSection.current - 1)
+        if (!introComplete.current || isAnimating.current || currentSection.current <= 0) return
+        goTo(currentSection.current - 1)
       },
     })
 
     const onKey = (e: KeyboardEvent) => {
-      if (isAnimating.current) return
+      if (!introComplete.current || isAnimating.current) return
       const key = e.key
       if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight' /* || (key === ' ' && !e.shiftKey) */) {
         e.preventDefault()
@@ -781,7 +784,7 @@ function App() {
         onContactsClick={() => goToRef.current?.(12)}
       />
 
-      <RightOrnament ref={ornamentHandleRef} />
+      <RightOrnament ref={ornamentHandleRef} onAnimationComplete={() => { introComplete.current = true }} />
 
       <ContactsRunner ref={contactsRunnerHandleRef} />
 

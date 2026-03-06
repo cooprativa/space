@@ -6,7 +6,11 @@ export interface RightOrnamentHandle {
   computeLeftX: () => number;
 }
 
-const RightOrnament = forwardRef<RightOrnamentHandle>((_, ref) => {
+interface RightOrnamentProps {
+  onAnimationComplete?: () => void;
+}
+
+const RightOrnament = forwardRef<RightOrnamentHandle, RightOrnamentProps>(({ onAnimationComplete }, ref) => {
   const ornamentRef = useRef<HTMLDivElement | null>(null);
   const firstSvgRef = useRef<SVGSVGElement | null>(null);
   const secondSvgRef = useRef<SVGSVGElement | null>(null);
@@ -57,7 +61,7 @@ const RightOrnament = forwardRef<RightOrnamentHandle>((_, ref) => {
     const finalGap = Math.max(80, Math.min(200, Math.round(window.innerWidth * 0.12)));
     const leaderOffset = leaderOffsetRef.current;
 
-    const raceTl = gsap.timeline();
+    const raceTl = gsap.timeline({ onComplete: onAnimationComplete });
     raceTl.to(firstSvgEl, { x: leaderOffset, duration: 1.25, ease: 'power4.out' }, 0);
     raceTl.to(secondSvgEl, { x: leaderOffset - finalGap * 2, duration: 1.25, ease: 'power4.out' }, 0.5);
 
