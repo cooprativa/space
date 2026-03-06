@@ -902,10 +902,11 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   flex-direction: column;
   flex: 0 0 calc((100% - 80px) / 3);
   min-height: 200px;
+  background: none !important;
 }
 .results-card > div:nth-of-type(2) {
    background: rgba(0,0,0,0.3);
-   backdrop-filter: blur(20px) saturate(130%);
+   /* backdrop-filter: blur(20px) saturate(130%); */
 }
 .results-cards-container .results-card-inner {
   display: flex;
@@ -914,6 +915,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   gap: 20px;
   padding: 20px 30px;
   min-height: 240px !important;
+  background: none !important;
 }
 .results-card .glass {
   padding: 0 !important;
@@ -922,10 +924,12 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   -webkit-backdrop-filter: blur(20px) saturate(130%) !important; */
   width: 100% !important;
   overflow: visible !important;
+  background: none !important;
 }
 .results-card .glass > div {
   width: 100% !important;
   z-index: none !important;
+  background: none !important;
 }
 .results-card > svg {
   position: absolute;
