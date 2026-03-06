@@ -905,8 +905,11 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   border-radius: 20px;
   background: none !important;
 }
+.results-card .bg-black {
+  background: none !important;
+}
 .results-card > div:nth-of-type(2) {
-   background: rgba(0,0,0,0.3);
+   background: rgba(0,0,0,0.3) !important;
    border-radius: 20px;
    /* backdrop-filter: blur(20px) saturate(130%); */
 }
@@ -935,6 +938,9 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   z-index: none !important;
   background: none !important;
   border-radius: 20px;
+}
+.glass__warp {
+  backdrop-filter: none !important;
 }
 .results-card > svg {
   position: absolute;
