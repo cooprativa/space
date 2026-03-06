@@ -593,8 +593,8 @@ function App() {
           // Chevrons exit off-screen
           if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw', y: '10vh', ease: 'power2.in' }, 0)
           if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw', y: '10vh', ease: 'power2.in' }, 0)
-          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '60vw', y: '20vh' }, 0)
-          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '60vw', y: '20vh' }, 0)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 0, x: '105vw', y: '0vh' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 0, x: '80vw', y: '0vh' }, 0)
           break
         }
         case 11: {
@@ -631,8 +631,8 @@ function App() {
           // Chevrons A/B off, C/D enter from right
           if (chevronA) tl.to(chevronA, { autoAlpha: 0, x: '-60vw', y: '10vh' }, 0)
           if (chevronB) tl.to(chevronB, { autoAlpha: 0, x: '60vw', y: '10vh' }, 0)
-          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '45vw', y: '20vh' }, 0.9)
-          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '20vw', y: '20vh' }, 0.3)
+          if (chevronC) tl.to(chevronC, { autoAlpha: 1, x: '45vw', y: '-60vh' }, 0)
+          if (chevronD) tl.to(chevronD, { autoAlpha: 1, x: '20vw', y: '-60vh' }, 0)
           break
         }
         case 12: {

@@ -1929,7 +1929,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 9;
+  z-index: 300;
   overflow: visible;
 }
 
