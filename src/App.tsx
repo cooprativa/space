@@ -123,7 +123,7 @@ function App() {
 
     // Top banner hidden outside the top of the screen by default — shown only on sections 7, 8, 9
     if (topBannerEl) {
-      gsap.set(topBannerEl, { autoAlpha: 1, yPercent: -100 })
+      gsap.set(topBannerEl, { autoAlpha: 0, yPercent: -100 })
     }
 
     const goTo = (index: number) => {
@@ -179,7 +179,7 @@ function App() {
       switch (index) {
         case 0: {
            // Voltar ao HERO
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 1 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 1, xPercent: 0 }, 0)
              .to(founderEl, { autoAlpha: 0, xPercent: 100 }, 0)
@@ -217,7 +217,7 @@ function App() {
         }
         case 1: {
           // HERO -> FOUNDER or AFTER-FOUNDER -> FOUNDER
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 1, xPercent: 0 }, 0)
@@ -257,7 +257,7 @@ function App() {
         }
         case 2: {
           // FOUNDER -> AFTER-FOUNDER
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -295,7 +295,7 @@ function App() {
         }
         case 3: {
           // AFTER-FOUNDER -> BEFORE WHO WE TRAIN
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -333,7 +333,7 @@ function App() {
         }
         case 4: {
           // BEFORE WHO WE TRAIN -> WHO WE TRAIN
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -371,7 +371,7 @@ function App() {
         }
         case 5: {
           // WHO WE TRAIN -> WHO WE TRAIN SECOND
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -409,7 +409,7 @@ function App() {
         }
         case 6: {
           // WHO WE TRAIN SECOND -> WHO WE TRAIN THIRD
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -561,7 +561,7 @@ function App() {
         }
         case 10: {
           // OUR COACHES -> COACHES CTA
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -599,7 +599,7 @@ function App() {
         }
         case 11: {
           // COACHES CTA -> RESULTS
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -637,7 +637,7 @@ function App() {
         }
         case 12: {
           // RESULTS -> CONTACTS
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -675,7 +675,7 @@ function App() {
         }
         case 13: {
           // CONTACTS -> FOOTER
-           tl.to(topBannerEl, { autoAlpha: 1, yPercent: -100, duration: 0.1 }, 0)
+           tl.to(topBannerEl, { autoAlpha: 0, yPercent: -100, duration: 0.1 }, 0)
              .to(heroEl, { autoAlpha: 0 }, 0)
              .to(heroImgContainerEl, { autoAlpha: 0 }, 0)
              .to(founderEl, { autoAlpha: 0 }, 0)
@@ -747,10 +747,10 @@ function App() {
     const onKey = (e: KeyboardEvent) => {
       if (isAnimating.current) return
       const key = e.key
-      if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight'|| (key === ' ' && !e.shiftKey)) {
+      if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight' /* || (key === ' ' && !e.shiftKey) */) {
         e.preventDefault()
         if (currentSection.current < 13) goTo(currentSection.current + 1)
-      } else if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' || (key === ' ' && e.shiftKey)) {
+      } else if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' /* || (key === ' ' && e.shiftKey) */) {
         e.preventDefault()
         if (currentSection.current > 0) goTo(currentSection.current - 1)
       }

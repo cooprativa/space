@@ -79,12 +79,12 @@ const FooterSection = forwardRef<HTMLDivElement>((_, ref) => {
       </div>
 
       <div className="footer-credits">
-        <small>© 2026 S Pace. All rigths reserved</small>
-        <small>@cooprativa</small>
+        <p>© 2026 S Pace. All rigths reserved</p>
+        <p>@cooprativa</p>
         <span>
-          <small>Privacy Policy</small>
-          <small>|</small>
-          <small>Terms of Use</small>
+          <p>Privacy Policy</p>
+          <p>|</p>
+          <p>Terms of Use</p>
         </span>
       </div>
       

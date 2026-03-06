@@ -15,28 +15,45 @@ Marketing landing page for Space — a cycling/sports training club. Single-page
 
 ```
 src/
-├── App.tsx              # Master: all refs, goTo() switch (14 cases), GSAP Observer setup (~696 lines)
-├── App.css              # Monolithic stylesheet (~1810 lines), all component styles
+├── App.tsx              # Master: all refs, goTo() switch (14 cases), GSAP Observer (~832 lines)
+├── App.css              # Monolithic stylesheet (~1946 lines), all component styles
 ├── index.css            # Global resets, CSS variables, Tailwind directives
 ├── assets/
 │   ├── images/          # Optimized images (compressed for Vercel)
 │   ├── svg/             # SVG assets and card decoration images
 │   └── fonts/           # Custom fonts (Coolvetica, Montserrat)
 └── components/
-    ├── sections/         # One file per full-screen section (14 total, see table below)
-    ├── Navbar.tsx        # LiquidGlass navbar, triggers goToRef callbacks
+    ├── Navbar.tsx        # LiquidGlass navbar + blur backdrop, triggers goToRef callbacks
     ├── RightOrnament.tsx # Race SVG with self-contained entrance animation
+    ├── ChevronOrnaments.tsx # 4 animated chevron SVGs, driven by App.tsx goTo() cases 6–13
     ├── FlipCard.tsx      # CSS 3D flip card (pure presentational)
     ├── ResultsCard.tsx   # Results carousel card
     ├── ContactForm.tsx   # Validated contact form
-    ├── ChevronOrnaments.tsx # 4 animated chevron SVGs, driven by App.tsx goTo() cases 6–13
     ├── ContactsRunner.tsx# Animated runner SVG for contacts section
     ├── StatItem.tsx      # Icon + CountUp + label
+    ├── CountUp.tsx       # Animated number counter (Framer Motion spring)
+    ├── ScrollReveal.tsx  # Scroll-triggered reveal wrapper
+    ├── GlassSurface.tsx  # Glass surface effect component
     ├── ScaffoldOverlay.tsx # "Optimized for larger screens" warning overlay
-    └── CountUp.tsx       # Animated number counter (Framer Motion spring)
+    └── sections/         # One file per full-screen section (15 total, see table)
+        ├── HeroSection.tsx
+        ├── FounderSection.tsx
+        ├── AfterFounderSection.tsx
+        ├── BeforeWhoWeTrainSection.tsx
+        ├── WhoWeTrainSection.tsx
+        ├── WhoWeTrainSecondSection.tsx
+        ├── WhoWeTrainThirdSection.tsx
+        ├── MeetTheTeamSection.tsx
+        ├── MeetTheTeamSecondSection.tsx
+        ├── OurCoachesSection.tsx
+        ├── CoachesCTASection.tsx
+        ├── RunnerSeparatorSection.tsx
+        ├── ResultsSection.tsx
+        ├── ContactsSection.tsx
+        └── FooterSection.tsx
 ```
 
-## Sections (index → component)
+## Sections (index -> component)
 
 | Index | Component | Comment |
 |-------|-----------|---------|
@@ -60,24 +77,26 @@ src/
 
 ```bash
 npm run dev      # Start Vite HMR dev server
-npm run build    # tsc -b && vite build → dist/
+npm run build    # tsc -b && vite build -> dist/
 npm run lint     # ESLint
 ```
 
-Path alias `@/*` → `./src/*` (configured in `tsconfig.app.json` and `vite.config.ts`).
+Path alias `@/*` -> `./src/*` (configured in `tsconfig.app.json` and `vite.config.ts`).
 
 ## Critical Constraints
 
-- **Do not modify** the GSAP Observer config (`App.tsx:638`) or the `isAnimating` gate — these prevent scroll-overlap bugs.
+- **Do not modify** the GSAP Observer config (`App.tsx:724`) or the `isAnimating` gate (`App.tsx:57`) — these prevent scroll-overlap bugs.
 - **Do not add native scroll** to any section. Navigation is 100% GSAP-driven.
 - `ref as any` casts on `<section>` elements are intentional — `forwardRef<HTMLDivElement>` vs `HTMLElement` mismatch.
-- `AfterFounderSection` returns a `<>` fragment (overlay div + section) — required by animation architecture (`App.tsx:709`).
+- `AfterFounderSection` returns a `<>` fragment (overlay div + section) — required by animation architecture (`App.tsx:794`).
 - `App.css` has a Google Fonts `@import` warning — existing issue, not an error.
 - `FlipCard` svg-front decoration must stay inside `.flip-card-front` (not `.flip-card-inner`) to inherit `backface-visibility: hidden`.
 - `ChevronOrnaments` uses GSAP `xPercent: -50, yPercent: -50` for centering (no CSS transform) — do not add CSS transforms to `.chevron-svg` or they will conflict with GSAP.
+- `.navbar-blur-backdrop` (`App.css:1482`) must have **no `transform` ancestor** — `backdrop-filter` breaks inside transformed stacking contexts. Uses `margin: 0 auto` centering instead.
+- `.glass .glass__warp` filters must stay disabled (`App.css:1513–1516`) — SVG displacement filter conflicts with backdrop-filter.
 
 ## Additional Documentation
 
 | File | When to check |
 |------|---------------|
-| `.claude/docs/architectural_patterns.md` | Before touching navigation, refs, handles, animation logic, or FlipCard CSS |
+| `.claude/docs/architectural_patterns.md` | Before touching navigation, refs, handles, animation logic, FlipCard CSS, or navbar blur |
