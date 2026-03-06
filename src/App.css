@@ -8,6 +8,7 @@ html, body, #root {
   background-color: #03333D;
 }
 body { touch-action: none; }
+body.scroll-mode-active { touch-action: auto; }
 
 /* Todas as secções ocupam o viewport e empilham via z-index */
 .section {
@@ -22,6 +23,32 @@ body { touch-action: none; }
 .founder-section { z-index: 1; }
 .after-founder { z-index: 1; }
 .before-who-we-train { z-index: 1; }
+
+/* ── Scroll-controlled zone ── */
+#smooth-wrapper .section {
+  position: relative;
+  inset: auto;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  will-change: auto;
+}
+
+.horizontal-track {
+  display: flex;
+  width: 300vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.horizontal-track .section {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+/* ── end scroll zone ── */
 
 /* Ornamento fixo para todas as secções */
 .right-ornament {
@@ -522,7 +549,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 
 /* Who We Train section styles */
 .who-we-train {
-  min-height: 110vh;
+  min-height: 100vh;
   /* background: linear-gradient(180deg, #345A7000 0%, #131B1E33 60%, #131B1E55 100%); */
   display: relative;
 }
@@ -571,7 +598,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 
 .who-we-train-second {
-  min-height: 110vh;
+  min-height: 100vh;
   background: linear-gradient(90deg, #345A7000 0%, #131B1E88 30%, #131B1E88 80%, #131B1E00 100%);
   display: relative;
 }

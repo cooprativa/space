@@ -1,80 +1,111 @@
 # Architectural Patterns
 
-## 1. goToRef — Navigation Without Prop Drilling
+## 1. Hybrid Scroll System — Observer + Native Scroll
 
-`goTo()` is defined inside App's `useEffect` closure (closes over all GSAP refs), so it cannot be passed as a prop at render time. Instead:
+The app uses two navigation modes controlled by `scrollMode` ref (`App.tsx:61`):
 
-- `goToRef = useRef<((index: number) => void) | null>(null)` declared at `App.tsx:53`
-- After `goTo` is defined, `goToRef.current = goTo` stores it (`App.tsx:~117`)
-- Navbar receives stable arrow callbacks: `onHeroClick={() => goToRef.current?.(0)}` (`App.tsx:~694`)
+**Observer mode (sections 0-3):** `Observer.create()` (`App.tsx:536`) intercepts all scroll/touch/keyboard input and calls `goTo()`. Sections are `position: fixed` overlays animated via GSAP timelines.
 
-Avoids re-renders and doesn't require Context or a state manager.
+**Scroll mode (sections 4-14):** Native scroll inside `#smooth-wrapper` (`App.tsx:618`), a `position: fixed; inset: 0` div. Sections 4-6 scroll horizontally via ScrollTrigger pin+scrub. Sections 7-14 scroll vertically (natural).
 
-## 2. useImperativeHandle Handles — Exposing Multiple DOM Refs
+### enterScrollMode (`App.tsx:130`)
+1. Adds `scroll-mode-active` class to body (re-enables `touch-action: auto`)
+2. Shows `#smooth-wrapper` with `overflow-y: auto`
+3. Hides all Observer-zone sections via `autoAlpha: 0`
+4. Clears GSAP inline transforms on scroll-zone sections (`clearProps: 'all'`)
+5. Sets `ScrollTrigger.defaults({ scroller: wrapper })`
+6. Creates horizontal ScrollTrigger for `.horizontal-track` (`App.tsx:160-173`)
+7. Creates backObserver (`App.tsx:176`) with `preventDefault: false` — detects upward scroll at `scrollTop <= 2` to return to Observer mode
+8. Sets up chevron ScrollTriggers and topBanner/contacts triggers
+9. Disables main Observer
 
-Section components that need to expose several DOM nodes to App's `goTo()` use this pattern instead of passing one ref per node:
+### exitScrollMode (`App.tsx:303`)
+1. Kills all ScrollTriggers, resets defaults
+2. Removes `scroll-mode-active` from body
+3. Hides wrapper, resets `scrollTop`
+4. Clears inline transforms, resets chevrons/banner/runner
+5. Re-enables main Observer
 
-1. Define a `Handle` interface with the exposed members
-2. `forwardRef` + `useImperativeHandle` inside the component
-3. **Getter properties** so the handle always returns the latest `.current` value (`RightOrnament.tsx:~28`)
+### Horizontal Scroll Track
+Sections 4-6 are wrapped in `.horizontal-track` (`App.tsx:621`), a `display: flex; width: 300vw` container. ScrollTrigger pins it and scrubs `xPercent: -66.67` (`App.tsx:160`).
 
-Components using this pattern:
-- `HeroSection.tsx` → `HeroSectionHandle` (`heroEl`, `bikerEl`)
-- `FounderSection.tsx` → `FounderSectionHandle` (`founderEl`, `founderImgEl`, `estDateEl`, `badgeEl`)
-- `RightOrnament.tsx` → `RightOrnamentHandle` (`ornamentEl`, `computeLeftX()`)
+CSS in `App.css:37-48`:
+```css
+.horizontal-track { display: flex; width: 300vw; height: 100vh; }
+.horizontal-track .section { width: 100vw; flex-shrink: 0; }
+```
 
-App holds typed refs: `const heroRef = useRef<HeroSectionHandle>(null)` and accesses via `heroRef.current?.heroEl`.
+### Scroll-zone section CSS override (`App.css:27-34`)
+```css
+#smooth-wrapper .section {
+  position: relative; inset: auto;
+  width: 100vw; height: 100vh; min-height: 100vh;
+}
+```
+Overrides the default `position: fixed` that Observer-zone sections use.
 
-## 3. GSAP Observer — Full-Page Navigation
+### Why not ScrollSmoother?
+ScrollSmoother was tried and rejected — it's designed for full-page scroll, not inside a `position: fixed` wrapper. The `overflow: hidden !important` on `html, body, #root` (needed for Observer mode) blocks ScrollSmoother entirely.
 
-`Observer.create()` at `App.tsx:638` intercepts all scroll/touch/keyboard input and routes it to `goTo()`. Native browser scroll is suppressed entirely.
+## 2. goToRef — Navigation Without Prop Drilling
 
-- `onDown` → `goTo(currentSection + 1)`
-- `onUp` → `goTo(currentSection - 1)`
-- Keyboard: Arrow keys, PageUp/Down, Space/Shift+Space all mapped (`App.tsx:~661`)
-- `isAnimating` ref (`App.tsx:55`) gates concurrent calls — `goTo()` is a no-op while a transition is running
+`goTo()` is defined inside App's `useEffect` closure. Cannot be passed as a prop at render time.
 
-## 4. Timeline Switch — Animation Orchestration
+- `goToRef = useRef<((index: number) => void) | null>(null)` (`App.tsx:55`)
+- Assigned after definition: `goToRef.current = goTo` (`App.tsx:533`)
+- Navbar receives stable arrows: `onHeroClick={() => goToRef.current?.(0)}` (`App.tsx:592`)
 
-`goTo(index)` at `App.tsx:117` is a single `switch` with one `case` per section transition (14 cases). Each case:
+## 3. useImperativeHandle Handles
 
-1. Creates a `gsap.timeline()`
-2. Animates 5–12 targets simultaneously (position, opacity, scale, color)
-3. Changes ornament color: `#ACFC17` (green) for hero/founder, `#bd97ec` (purple) elsewhere
-4. Resets `isAnimating` via `setTimeout(250ms)` in `onComplete` (`App.tsx:159`)
+Components exposing multiple DOM refs use `forwardRef` + `useImperativeHandle` with **getter properties** for fresh `.current` values:
 
-Do not extract individual cases into separate functions — the closure over all refs is intentional and required.
+- `HeroSectionHandle` -> `heroEl`, `bikerEl`
+- `FounderSectionHandle` -> `founderEl`, `founderImgEl`, `estDateEl`, `badgeEl`
+- `RightOrnamentHandle` -> `ornamentEl`, `computeLeftX()`
+- `ChevronOrnamentsHandle` -> `chevronA`-`chevronD`
 
-## 5. Ref-Only State for Navigation
+## 4. GSAP Observer — Observer-Zone Navigation
 
-`currentSection` and `isAnimating` are **refs, not state** (`App.tsx:54-55`). Changes to these must never trigger re-renders — re-renders would reset GSAP animations mid-flight.
+`Observer.create()` at `App.tsx:536`. Limits navigation to sections 0-4 (`currentSection < 4`).
 
-The only `useState` calls in App are:
-- `afterFounderActive` — triggers CountUp animations via the `active` prop on `AfterFounderSection` (`App.tsx:57`)
+- `onDown` / `onUp` -> `goTo(currentSection +/- 1)`
+- `onChangeY` with `dy > 7` threshold for wheel events
+- Keyboard handler (`App.tsx:559`) returns early if `scrollMode.current` is true
+- `isAnimating` ref (`App.tsx:58`) gates concurrent calls
+- Trackpad double-scroll fix: dual-gate using Observer's `onStop`/`onStopDelay: 0.15`
 
-## 6. Self-Contained Component Animation
+## 5. goTo() Switch — Animation Orchestration (`App.tsx:350`)
 
-`RightOrnament.tsx` owns its entrance animation entirely in its own `useEffect`:
-- `racePlayedRef` — ensures the animation runs once on mount
-- `leaderOffsetRef` — stores the final X position so `computeLeftX()` can read it later
+Handles two paths:
+1. **index >= 4**: Enters scroll mode, creates fade-out timeline for Observer-zone sections, then calls `enterScrollMode()` on complete. If already in scroll mode, uses native `wrapper.scrollTo()`.
+2. **index 0-3**: Standard Observer-zone switch with 4 cases. Each case creates a `gsap.timeline()` animating 5-12 targets. Ornament color: `#ACFC17` (green) for hero/founder, `#bd97ec` (purple) elsewhere.
 
-Keeps race animation logic out of App's already-complex `goTo` switch.
+## 6. Ref-Only State for Navigation
 
-## 7. Fragment Return (AfterFounderSection)
+`currentSection`, `isAnimating`, `scrollMode` are **refs, not state** (`App.tsx:57-61`). Re-renders would reset GSAP animations mid-flight.
 
-`AfterFounderSection.tsx` returns a `<>` fragment wrapping an overlay `<div>` and a `<section>`. The overlay div must be a sibling (not child) of the section for `goTo(2)`'s GSAP animation to work. The overlay ref (`imgOverlayRef`) is passed as a prop from App (`App.tsx:709`).
+Only `useState`: `afterFounderActive` — triggers CountUp via `active` prop on `AfterFounderSection`.
 
-## 8. startWhen Prop — Deferred Animation Trigger
+## 7. Chevron Animations — Dual Driver
 
-`CountUp.tsx` accepts `startWhen: boolean`. When `false`, the spring stays at 0. App sets `afterFounderActive = true` inside `goTo(2)`'s `onComplete`, which flows down as `active` → `startWhen`. Decouples counting from scroll events and ensures it only runs after the section transition completes.
+**Observer mode**: Chevrons hidden (`autoAlpha: 0`) in all cases 0-3.
+**Scroll mode**: `setupChevronScrollTriggers()` (`App.tsx:231`) creates 6 ScrollTrigger instances with `scrub: true` tied to section visibility. Chevrons A/B enter at MeetTheTeam, cross at OurCoaches, exit at CoachesCTA. Chevrons C/D enter at CoachesCTA, exit at Contacts.
 
-## 9. FlipCard CSS Architecture
+## 8. Self-Contained Component Animation (RightOrnament)
 
-`FlipCard.tsx` uses CSS 3D transforms. Key rules in `App.css`:
+`RightOrnament.tsx` owns its entrance animation in its own `useEffect`. `racePlayedRef` ensures single run. `computeLeftX()` exposed via handle for `goTo(1)` ornament positioning.
 
-- `.flip-card-inner` — `transform-style: preserve-3d`, rotates on hover (`App.css:~1322`)
-- `.flip-card-front` and `.flip-card-back` — both `position: absolute; width: 100%; height: 100%; backface-visibility: hidden`
-- `.flip-card-back` has `transform: rotateY(180deg)` to hide it initially
-- `.svg-front` decoration **must live inside `.flip-card-front`** (not `.flip-card-inner`) to inherit `backface-visibility: hidden` and disappear naturally during the flip
-- Profile images inside `.flip-card-front` use `flex: 1; min-height: 0; object-fit: cover` to fill available space without overflowing the card bounds
-- Card-specific decoration widths use `.flip-card-front > .svg-front` selector; profile image widths use `img:not(.svg-front)` to avoid the decoration being resized by those rules
+## 9. Fragment Return (AfterFounderSection)
+
+Returns `<>` fragment wrapping overlay `<div>` + `<section>`. Overlay must be a sibling (not child) for GSAP animation to work. Overlay ref passed as `imgOverlayRef` prop (`App.tsx:611`).
+
+## 10. FlipCard CSS Architecture
+
+- `.flip-card-inner` — `transform-style: preserve-3d`, rotates on hover
+- `.flip-card-front/.back` — `position: absolute; backface-visibility: hidden`
+- `.svg-front` decoration must live inside `.flip-card-front`
+- Profile images use `flex: 1; min-height: 0; object-fit: cover`
+
+## 11. Navbar Backdrop Blur Workaround
+
+`backdrop-filter` breaks inside `transform` ancestors. `.navbar-blur-backdrop` (`Navbar.tsx:88`) sits outside the LiquidGlass container. JS syncs dimensions from `.glass` bounding rect (`Navbar.tsx:19-30`). Centering via `margin: 0 auto`. `.glass .glass__warp` filters disabled.
