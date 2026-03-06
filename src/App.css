@@ -1479,37 +1479,41 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   color: #ACFC17;
   border: solid 2px #ACFC17;
 }
+.navbar-blur-backdrop {
+  position: fixed;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 999;
+  border-radius: 40px;
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  pointer-events: none;
+  transition: width 0.2s ease-out, height 0.2s ease-out;
+}
+
 .liquid-glass-navbar-container {
   position: fixed;
-  bottom: 7vh;
+  bottom: 64px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
   display: flex;
   padding: 0px 0px;
-  /* background: rgba(26, 26, 26, 0.50) !important; */
-  /* backdrop-filter: blur(50px) !important; */
 }
 .liquid-glass-navbar-container span:nth-of-type(1) {
   box-shadow: none !important;
 }
-/* Dark tint + padding + backdrop blur applied directly on .glass.
-   Putting backdrop-filter here (instead of on the nested glass__warp span)
-   avoids stacking-context issues caused by the container's transform. */
 .glass {
   padding: 18px 32px !important;
   box-shadow: none !important;
-  /* background: rgba(26, 26, 26, 0.50) !important; */
-  /* backdrop-filter: blur(20px) saturate(130%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(130%) !important; */
 }
 
-/* Disable the internal glass__warp effects — blur is now on .glass itself */
 .glass .glass__warp {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   filter: none !important;
-  /* background: rgba(0,0,0,0.35); */
   overflow: hidden;
 }
 
@@ -1517,13 +1521,12 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
    the glass size instantly (updated every frame via resize events).
    Only keep transform transition for the elastic mouse-follow effect. */
    
-/* .liquid-glass-navbar-container > div:nth-of-type(1) {
-   transition: transform 0.4s ease-out !important;
-} */
 .liquid-glass-navbar-container > div:nth-of-type(2) {
-   background: rgba(0,0,0,0.5);
-   backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid #ffffff11;
+  outline: 1px solid #ffffff11;
+   background: #00000075;
 }
+/* Removed: div:nth-of-type(2) backdrop-filter hack — blur now lives on .glass */
 
 
 /* Collapsed (default) → narrow; Expanded (on hover) → wide */
