@@ -2,80 +2,79 @@
 
 ## 1. goToRef — Navigation Without Prop Drilling
 
-`goTo()` is defined inside App's `useEffect` closure (it closes over GSAP refs), so it can't be passed as a prop at render time. Instead:
+`goTo()` is defined inside App's `useEffect` closure (closes over all GSAP refs), so it cannot be passed as a prop at render time. Instead:
 
-- `goToRef = useRef<((index: number) => void) | null>(null)` is declared at the top of App (`App.tsx:30`)
-- After `goTo` is defined inside the effect, `goToRef.current = goTo` stores it (`App.tsx:~71`)
-- Navbar receives stable arrow callbacks: `onHeroClick={() => goToRef.current?.(0)}` (`App.tsx:~225`)
+- `goToRef = useRef<((index: number) => void) | null>(null)` declared at `App.tsx:53`
+- After `goTo` is defined, `goToRef.current = goTo` stores it (`App.tsx:~117`)
+- Navbar receives stable arrow callbacks: `onHeroClick={() => goToRef.current?.(0)}` (`App.tsx:~694`)
 
-This avoids re-renders and doesn't require Context or a state manager.
+Avoids re-renders and doesn't require Context or a state manager.
 
 ## 2. useImperativeHandle Handles — Exposing Multiple DOM Refs
 
-Section components need to expose several DOM nodes to App's `goTo()` without passing a ref per node. Pattern:
+Section components that need to expose several DOM nodes to App's `goTo()` use this pattern instead of passing one ref per node:
 
 1. Define a `Handle` interface with the exposed members
-2. Use `forwardRef` + `useImperativeHandle` inside the component
-3. Use **getter properties** so the handle always returns the latest `.current` value
+2. `forwardRef` + `useImperativeHandle` inside the component
+3. **Getter properties** so the handle always returns the latest `.current` value (`RightOrnament.tsx:~28`)
 
-Example from `RightOrnament.tsx`:
-```ts
-// RightOrnament.tsx:11-18
-export interface RightOrnamentHandle {
-  ornamentEl: HTMLDivElement | null;
-  computeLeftX: () => number;
-}
-useImperativeHandle(ref, () => ({
-  get ornamentEl() { return ornamentRef.current; },
-  computeLeftX: () => { /* reads ornamentRef.current at call time */ },
-}));
-```
-
-Same pattern used in:
+Components using this pattern:
 - `HeroSection.tsx` → `HeroSectionHandle` (`heroEl`, `bikerEl`)
 - `FounderSection.tsx` → `FounderSectionHandle` (`founderEl`, `founderImgEl`, `estDateEl`, `badgeEl`)
-- `RightOrnament.tsx` → `RightOrnamentHandle` (`ornamentEl`, `computeLeftX`)
+- `RightOrnament.tsx` → `RightOrnamentHandle` (`ornamentEl`, `computeLeftX()`)
 
-App holds typed refs: `const heroRef = useRef<HeroSectionHandle>(null)` and accesses members via `heroRef.current?.heroEl`.
+App holds typed refs: `const heroRef = useRef<HeroSectionHandle>(null)` and accesses via `heroRef.current?.heroEl`.
 
 ## 3. GSAP Observer — Full-Page Navigation
 
-`gsap.Observer.create()` in `App.tsx:~251` intercepts **all** scroll/touch/keyboard input and routes it to `goTo()`. Native browser scroll is suppressed entirely.
+`Observer.create()` at `App.tsx:638` intercepts all scroll/touch/keyboard input and routes it to `goTo()`. Native browser scroll is suppressed entirely.
 
-- `onDown` → `goTo(currentSection - 1)`
-- `onUp` → `goTo(currentSection + 1)`
-- Keyboard: Arrow keys, PageUp/Down, Space/Shift+Space all mapped
-- `isAnimating` ref gates concurrent calls — never call `goTo()` recursively
+- `onDown` → `goTo(currentSection + 1)`
+- `onUp` → `goTo(currentSection - 1)`
+- Keyboard: Arrow keys, PageUp/Down, Space/Shift+Space all mapped (`App.tsx:~661`)
+- `isAnimating` ref (`App.tsx:55`) gates concurrent calls — `goTo()` is a no-op while a transition is running
 
 ## 4. Timeline Switch — Animation Orchestration
 
-`goTo(index)` in `App.tsx:~71` is a single `switch` statement with one `case` per section transition. Each case:
+`goTo(index)` at `App.tsx:117` is a single `switch` with one `case` per section transition (14 cases). Each case:
 
 1. Creates a `gsap.timeline()`
-2. Animates 5–12 targets simultaneously (positions, opacity, scale)
-3. Changes ornament color: green `#ACFC17` for hero/founder, purple `#bd97ec` elsewhere
-4. Sets `isAnimating = false` and starts the 400ms cooldown in `onComplete`
+2. Animates 5–12 targets simultaneously (position, opacity, scale, color)
+3. Changes ornament color: `#ACFC17` (green) for hero/founder, `#bd97ec` (purple) elsewhere
+4. Resets `isAnimating` via `setTimeout(250ms)` in `onComplete` (`App.tsx:159`)
 
-Do not extract individual cases into separate functions — the closure over all refs is intentional.
+Do not extract individual cases into separate functions — the closure over all refs is intentional and required.
 
 ## 5. Ref-Only State for Navigation
 
-`currentSection` and `isAnimating` are **refs, not state** (`App.tsx:28-29`). This is deliberate: changes to these values must never trigger re-renders, since re-renders would reset GSAP animations mid-flight.
+`currentSection` and `isAnimating` are **refs, not state** (`App.tsx:54-55`). Changes to these must never trigger re-renders — re-renders would reset GSAP animations mid-flight.
 
-The only `useState` in App is `afterFounderActive` — it triggers CountUp animations via the `active` prop on `AfterFounderSection`.
+The only `useState` calls in App are:
+- `afterFounderActive` — triggers CountUp animations via the `active` prop on `AfterFounderSection` (`App.tsx:57`)
 
 ## 6. Self-Contained Component Animation
 
-`RightOrnament.tsx` owns its entrance animation entirely in its own `useEffect`. It uses:
-- `racePlayedRef` — ensures the animation runs **once** on mount
-- `leaderOffsetRef` — stores the final X position for `computeLeftX()` to read later
+`RightOrnament.tsx` owns its entrance animation entirely in its own `useEffect`:
+- `racePlayedRef` — ensures the animation runs once on mount
+- `leaderOffsetRef` — stores the final X position so `computeLeftX()` can read it later
 
-This keeps race animation logic out of App's already-complex `goTo` switch.
+Keeps race animation logic out of App's already-complex `goTo` switch.
 
 ## 7. Fragment Return (AfterFounderSection)
 
-`AfterFounderSection.tsx` returns a `<>` fragment wrapping an overlay `<div>` and a `<section>`. This is required because the overlay div must be a sibling (not a child) of the section for the GSAP animation in `goTo(2)` to work correctly. The overlay ref (`imgOverlayRef`) is passed as a prop from App.
+`AfterFounderSection.tsx` returns a `<>` fragment wrapping an overlay `<div>` and a `<section>`. The overlay div must be a sibling (not child) of the section for `goTo(2)`'s GSAP animation to work. The overlay ref (`imgOverlayRef`) is passed as a prop from App (`App.tsx:709`).
 
 ## 8. startWhen Prop — Deferred Animation Trigger
 
-`CountUp.tsx` accepts a `startWhen: boolean` prop. When `false`, the spring stays at 0. App sets `afterFounderActive = true` inside `goTo(2)`'s `onComplete`, which flows down as `active` → `startWhen`. This decouples the counting animation from scroll events and ensures it only runs after the section transition completes.
+`CountUp.tsx` accepts `startWhen: boolean`. When `false`, the spring stays at 0. App sets `afterFounderActive = true` inside `goTo(2)`'s `onComplete`, which flows down as `active` → `startWhen`. Decouples counting from scroll events and ensures it only runs after the section transition completes.
+
+## 9. FlipCard CSS Architecture
+
+`FlipCard.tsx` uses CSS 3D transforms. Key rules in `App.css`:
+
+- `.flip-card-inner` — `transform-style: preserve-3d`, rotates on hover (`App.css:~1322`)
+- `.flip-card-front` and `.flip-card-back` — both `position: absolute; width: 100%; height: 100%; backface-visibility: hidden`
+- `.flip-card-back` has `transform: rotateY(180deg)` to hide it initially
+- `.svg-front` decoration **must live inside `.flip-card-front`** (not `.flip-card-inner`) to inherit `backface-visibility: hidden` and disappear naturally during the flip
+- Profile images inside `.flip-card-front` use `flex: 1; min-height: 0; object-fit: cover` to fill available space without overflowing the card bounds
+- Card-specific decoration widths use `.flip-card-front > .svg-front` selector; profile image widths use `img:not(.svg-front)` to avoid the decoration being resized by those rules

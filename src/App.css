@@ -628,7 +628,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   margin-left: 30px;
 }
 .team-member.person-right {
-  top: 320px;
+  top: 400px;
   right: 400px;
   margin-right: 50px;
 }
@@ -1185,7 +1185,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   padding: 15px 30px;
   transform: scale(120%); /* scale up based on viewport width, with a base of 110% at 1450px */
   top: 20vh;
-  left: 50vw;
+  left: 42vw;
   width: 400px;
   height: 600px;
 }
@@ -1262,7 +1262,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
 }
 .flip-card.profile-card-team {
   top: 24vh;
-  left: 16vw;
+  left: 12vw;
   width: 300px;
   height: 440px;
 }
@@ -1938,7 +1938,7 @@ button.founder-sub:active svg path:first-child { transform: translateY(1px); }
   top: 50%;
   left: 50%;
   transform-origin: center center;
-  height: 45vh;
+  height: 98vh;
   width: auto;
   will-change: transform, opacity;
 }
